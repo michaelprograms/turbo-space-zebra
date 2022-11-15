@@ -1,0 +1,21 @@
+table.map-grid {
+    user-select: none;
+}
+/* table.map-grid tr {
+
+} */
+table.map-grid td {
+    width: 30px;
+    max-width: 30px;
+    height: 30px;
+    max-height: 30px;
+    font-size: 9px;
+    overflow: hidden;
+    text-align: center;
+}
+table.map-grid td:hover {
+    background-color: #AAA;
+}
+table.map-grid td.focus {
+    background-color: #999;
+}
