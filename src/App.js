@@ -40,12 +40,46 @@ function App() {
     setFocusY(newY);
     setMap(mapCopy);
   }
-
+  
   const handleKeyDown = (event) => {
-    console.log('Key: ' + event.key);
+    event.preventDefault();
+
+    switch (event.key) {
+      case 'End': case '1':
+        console.log('INPUT: southwest');
+        break;
+      case 'ArrowDown': case '2':
+        console.log('INPUT: south');
+        break;
+      case 'PageDown': case '3':
+        console.log('INPUT: southeast');
+        break;
+      case 'ArrowLeft': case '4':
+        console.log('INPUT: west');
+        break;
+      case 'Clear': case '5':
+        console.log('INPUT: FIVE');
+        break;
+      case 'ArrowRight': case '6':
+        console.log('INPUT: east');
+        break;
+      case 'Home': case '7':
+        console.log('INPUT: northwest');
+        break;
+      case 'ArrowUp': case '8':
+        console.log('INPUT: north');
+        break;
+      case 'PageUp': case '9':
+        console.log('INPUT: northeast');
+        break;
+    }
   };
+
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown, true);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
   }, []);
 
   return (
