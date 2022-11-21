@@ -39,48 +39,77 @@ function App() {
     setFocusX(newX);
     setFocusY(newY);
     setMap(mapCopy);
+    document.getElementById('debug').innerHTML += '<div>CLICK found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
   }
   
-  const handleKeyDown = (event) => {
-    event.preventDefault();
-
-    switch (event.key) {
-      case 'End': case '1':
-        console.log('INPUT: southwest');
-        break;
-      case 'ArrowDown': case '2':
-        console.log('INPUT: south');
-        break;
-      case 'PageDown': case '3':
-        console.log('INPUT: southeast');
-        break;
-      case 'ArrowLeft': case '4':
-        console.log('INPUT: west');
-        break;
-      case 'Clear': case '5':
-        console.log('INPUT: FIVE');
-        break;
-      case 'ArrowRight': case '6':
-        console.log('INPUT: east');
-        break;
-      case 'Home': case '7':
-        console.log('INPUT: northwest');
-        break;
-      case 'ArrowUp': case '8':
-        console.log('INPUT: north');
-        break;
-      case 'PageUp': case '9':
-        console.log('INPUT: northeast');
-        break;
-    }
-  };
-
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      let dir;
+      let newX = focusX, newY = focusY;
+      switch (event.key) {
+        case 'End': case '1':
+          dir = 'SW';
+          newX ++;
+          newY --;
+          break;
+        case 'ArrowDown': case '2':
+          dir = 'S';
+          newX ++;
+          break;
+        case 'PageDown': case '3':
+          dir = 'SE';
+          newX ++;
+          newY ++;
+          break;
+        case 'ArrowLeft': case '4':
+          dir = 'W';
+          newY --;
+          break;
+        case 'Clear': case '5':
+          dir = '5';
+          break;
+        case 'ArrowRight': case '6':
+          dir = 'E';
+          newY ++;
+          break;
+        case 'Home': case '7':
+          dir = 'NW';
+          newX --;
+          newY --;
+          break;
+        case 'ArrowUp': case '8':
+          dir = 'N';
+          newX --;
+          break;
+        case 'PageUp': case '9':
+          dir = 'NE';
+          newX --;
+          newY ++;
+          break;
+        default:
+          
+      }
+      if (dir) {
+        if (newX < 0 || newX >= WIDTH || newY < 0 || newY >= HEIGHT) {
+          return;
+        }
+        const mapCopy = [ ...map ];
+        event.preventDefault();
+        console.log('INPUT: dir = ' + dir);
+        mapCopy[focusX][focusY].focus = false;
+        mapCopy[newX][newY].focus = true;
+        setFocusX(newX);
+        setFocusY(newY);
+        setMap(mapCopy);
+        document.getElementById('debug').innerHTML += '<div>KEYPRESS ' + event.key + ' found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
+      }
+    };
+
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     }
-  }, []);
+  }, [focusX, focusY, map]);
 
   return (
     <div className="App">
