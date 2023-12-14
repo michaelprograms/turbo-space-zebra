@@ -1,5 +1,6 @@
 table.map-grid {
     user-select: none;
+    border-spacing: 0;
 }
 /* table.map-grid tr {
 

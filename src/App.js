@@ -2,24 +2,24 @@ import { useEffect, useState } from 'react';
 
 import './App.css';
 
-import MapHeader from './MapHeader';
-import MapGrid from './MapGrid';
+import MapHeader from './components/MapHeader';
+import MapGrid from './components/MapGrid';
 
-const WIDTH = 5, HEIGHT = 5;
+const WIDTH = 10, HEIGHT = 10;
 
-function App() {
+function App () {
   const [focusX, setFocusX] = useState(0);
   const [focusY, setFocusY] = useState(0);
-  const [map, setMap] = useState([]);
+  const [map, setMap] = useState([ ]);
 
   if (map.length < WIDTH) {
     for (let x = 0; x < WIDTH; x ++) {
       if (map.length < WIDTH) {
-        map.push([]);
+        map.push([ ]);
       }
       for (let y = 0; y < HEIGHT; y ++) {
         if (map.length < WIDTH) {
-          map[x].push([]);
+          map[x].push([ ]);
         }
         map[x][y] = {
           x: x,
@@ -39,7 +39,7 @@ function App() {
     setFocusX(newX);
     setFocusY(newY);
     setMap(mapCopy);
-    document.getElementById('debug').innerHTML += '<div>CLICK found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
+    // document.getElementById('debug').innerHTML += '<div>CLICK found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
   }
   
   useEffect(() => {
@@ -95,13 +95,13 @@ function App() {
         }
         const mapCopy = [ ...map ];
         event.preventDefault();
-        console.log('INPUT: dir = ' + dir);
         mapCopy[focusX][focusY].focus = false;
         mapCopy[newX][newY].focus = true;
         setFocusX(newX);
         setFocusY(newY);
         setMap(mapCopy);
-        document.getElementById('debug').innerHTML += '<div>KEYPRESS ' + event.key + ' found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
+        // console.log('INPUT: dir = ' + dir);
+        // document.getElementById('debug').innerHTML += '<div>KEYPRESS ' + event.key + ' found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
       }
     };
 
