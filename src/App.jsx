@@ -1,7 +1,7 @@
 import { Alignment, Button, Navbar } from "@blueprintjs/core";
 
-import PageMap from './page/Map.js';
-import PageMenu from './page/Menu.js';
+import PageMap from './page/Map';
+import PageMenu from './page/Menu';
 
 import './App.css';
 
