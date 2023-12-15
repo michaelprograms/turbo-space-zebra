@@ -1,3 +1,9 @@
 .page-menu {
+    display: flex;
+    justify-content: center;
+}
 
+.page-menu .maps {
+    width: 75%;
+    min-width: 500px;
 }
