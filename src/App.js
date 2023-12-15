@@ -18,7 +18,7 @@ function App () {
       </Navbar>
 
       <PageMenu />
-      <PageMap />
+      {/* <PageMap /> */}
     </div>
   );
 }
