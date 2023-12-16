@@ -3,7 +3,7 @@ import { Card, CardList, Classes, Section } from "@blueprintjs/core";
 import { ChevronRight } from "@blueprintjs/icons";
 import { v4 as uuidv4 } from 'uuid';
 
-import './Menu.css';
+import './map-menu.css';
 
 function PageMenu (props) {    
 
@@ -44,7 +44,7 @@ function PageMenu (props) {
   }
 
   return (
-    <div className="page-menu">
+    <div className="map-menu">
       <CardList className="maps">
       {maps.map((map,x) => {
           return (

@@ -1,13 +1,53 @@
 import { useEffect, useState } from 'react';
 
-import MapHeader from '../components/MapHeader';
-import MapGrid from '../components/MapGrid';
-
-import './Map.css';
+import './map-grid.css';
 
 const WIDTH = 10, HEIGHT = 10;
 
-function PageMap (props) {
+function MapGridTableCell (props) {
+  const { x, y, focus } = { ...props };
+
+  return (
+    <td
+      className={`${focus ? "focus" : ""}`}
+      onClick={e => props.handleOnClick(e)}
+      x={x}
+      y={y}
+    >
+      {x},{y}
+    </td>
+  );
+}
+
+function MapGridTable (props) {
+  const { map } = { ...props };
+
+  return (
+    <table className="map-grid">
+      <tbody>
+        {map.map((row,x) => {
+          return (
+            <tr key={"row-"+x}>
+              {row.map((item,y) => {
+                return (
+                  <MapGridTableCell
+                    key={x+"-"+y}
+                    x={item.x}
+                    y={item.y}
+                    focus={item.focus}
+                    handleOnClick={e => props.handleOnClick(e)}
+                  />
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+
+function MapGrid (props) {
   const [focusX, setFocusX] = useState(0);
   const [focusY, setFocusY] = useState(0);
   const [map, setMap] = useState([ ]);
@@ -39,7 +79,6 @@ function PageMap (props) {
       setFocusX(newX);
       setFocusY(newY);
       setMap(mapCopy);
-      // document.getElementById('debug').innerHTML += '<div>CLICK found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
   }
       
   useEffect(() => {
@@ -110,14 +149,12 @@ function PageMap (props) {
       document.removeEventListener('keydown', handleKeyDown);
     }
   }, [focusX, focusY, map]);
-    
+  
+  /* focusX={focusX} focusY={focusY} */
+  
   return (
     <div className="page-map">
-      <MapHeader
-        focusX={focusX}
-        focusY={focusY}
-        />
-      <MapGrid
+      <MapGridTable
         map={map}
         handleOnClick={(e) => handleOnClick(e)}
       />
@@ -125,4 +162,4 @@ function PageMap (props) {
   );
 }
 
-export default PageMap;
+export default MapGrid;

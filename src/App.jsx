@@ -1,25 +1,16 @@
-import { Alignment, Button, Navbar } from "@blueprintjs/core";
+import { Routes, Route } from 'react-router-dom';
 
-import PageMap from './page/Map';
-import PageMenu from './page/Menu';
+import Home from './routes/home';
+import Map from './routes/map';
 
 import './App.css';
 
 function App () {
   return (
-    <div className="App">
-      <Navbar>
-        <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>Turbo Space Zebra</Navbar.Heading>
-          <Navbar.Divider />
-          <Button className="bp5-minimal" icon="home" text="Home" />
-          <Button className="bp5-minimal" icon="document" text="Files" />
-        </Navbar.Group>
-      </Navbar>
-
-      <PageMenu />
-      {/* <PageMap /> */}
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/map" element={<Map />} />
+    </Routes>      
   );
 }
 
