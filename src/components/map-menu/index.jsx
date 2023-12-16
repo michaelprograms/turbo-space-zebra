@@ -1,63 +1,46 @@
 import { useEffect, useState } from 'react';
-import { Card, CardList, Classes, Section } from "@blueprintjs/core";
-import { ChevronRight } from "@blueprintjs/icons";
-import { v4 as uuidv4 } from 'uuid';
+import { Button, Card, CardList, Classes, Section } from '@blueprintjs/core';
+import { db } from '../../data';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 import './map-menu.css';
 
-function PageMenu (props) {    
+function PageMenu (props) {
+  const mapsData = useLiveQuery(() => db.maps.toArray());
+  console.log('mapsData', mapsData);
 
-  const storedMapsRaw = JSON.parse(localStorage.getItem('maps')) || [];
-  let storedMaps = [ ...storedMapsRaw ];
-  if (storedMaps.length <= 10) {
-    storedMaps.push({
-      name: 'Add new map',
-      type: 'new',
-    });
-  }
-  const [ maps, setMaps ] = useState(storedMaps);
-
-  useEffect(() => {
-    const mapsToSave = maps.filter(map => map.type !== 'new');
-    localStorage.setItem('maps', JSON.stringify(mapsToSave));
-  }, [ maps ]);
-
-  const loadOrNewMapOnClick = (event, map) => {
-    event.preventDefault();
-    
-    let mapsCopy = [ ...maps ];
-    if (map.type === 'new') {
-      if (mapsCopy.length <= 10) {
-        mapsCopy.splice(mapsCopy.length - 1, 0, {
-          name: 'Untitled map ' + (mapsCopy.length),
-          id: uuidv4(),
-        });
-      }
-      if (mapsCopy.length > 11) {
-        mapsCopy = mapsCopy.slice(0, 11);
-      }
-      console.log('NEW', map);
-    } else {
-      console.log('OPEN', map);
+  const newMapOnClick = async () => {
+    try {
+      const id = await db.maps.add({
+        name: 'Untitled Map',
+        width: 25,
+        height: 25,
+        created: Date.now(),
+        edited: Date.now(),
+      });
+      console.log('added id:', id);
+    } catch (error) {
+      setStatus(`Failed to add new map: ${error}`);
     }
-    setMaps(mapsCopy);
+  };
+  const loadMapOnClick = (event, map) => {
+    console.log('OPEN', map);
   }
 
   return (
     <div className="map-menu">
+      <div className="map-buttons">
+        <Button text="Add new map" icon="add" intent="primary" onClick={newMapOnClick} />
+      </div>
       <CardList className="maps">
-      {maps.map((map,x) => {
-          return (
-            <Card
-              key={"map-"+x}
-              onClick={e => loadOrNewMapOnClick(e, map)}
-              interactive={true}
-            >
-              <span>{map.name}</span>
-              <ChevronRight className={Classes.TEXT_MUTED} />
-            </Card>
-          );
-      })}
+      {mapsData?.map((map) => (
+        <Card key={map.id}
+          onClick={e => loadMapOnClick(e, map)}
+          interactive={true}
+        >
+          <span>{map.name}, {map.width}x{map.height}</span>
+        </Card>
+      ))}
       </CardList>
     </div>
   );

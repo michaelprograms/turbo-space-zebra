@@ -1,9 +1,18 @@
 .map-menu {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    margin-top: 40px;
 }
 
 .map-menu .maps {
     width: 75%;
     min-width: 500px;
+    margin: 0 auto;
+}
+
+.map-menu .map-buttons {
+    width: 75%;
+    min-width: 500px;
+    margin: 0 auto;
+    text-align: right;
 }

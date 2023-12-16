@@ -1,4 +1,4 @@
-import { Alignment, Button, Navbar } from "@blueprintjs/core";
+import { Alignment, Button, Navbar } from '@blueprintjs/core';
 
 import MapMenu from '../../components/map-menu';
 
