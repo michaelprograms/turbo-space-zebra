@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Card, CardList, Classes, Section } from '@blueprintjs/core';
 import { db } from '../../data';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -7,7 +7,6 @@ import './map-menu.css';
 
 function PageMenu (props) {
   const mapsData = useLiveQuery(() => db.maps.toArray());
-  console.log('mapsData', mapsData);
 
   const newMapOnClick = async () => {
     try {
@@ -23,9 +22,6 @@ function PageMenu (props) {
       setStatus(`Failed to add new map: ${error}`);
     }
   };
-  const loadMapOnClick = (event, map) => {
-    console.log('OPEN', map);
-  }
 
   return (
     <div className="map-menu">
@@ -34,12 +30,11 @@ function PageMenu (props) {
       </div>
       <CardList className="maps">
       {mapsData?.map((map) => (
-        <Card key={map.id}
-          onClick={e => loadMapOnClick(e, map)}
-          interactive={true}
-        >
-          <span>{map.name}, {map.width}x{map.height}</span>
-        </Card>
+        <Link to={"/map/"+map.id} key={map.id}>
+          <Card interactive={true} >
+            <span>{map.name}, {map.width}x{map.height}</span>
+          </Card>
+        </Link>
       ))}
       </CardList>
     </div>
