@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 
 import './map-grid.css';
 
-const WIDTH = 10, HEIGHT = 10;
-
 function MapGridTableCell (props) {
   const { x, y, focus } = { ...props };
 
@@ -48,17 +46,19 @@ function MapGridTable (props) {
 }
 
 function MapGrid (props) {
+  const { w, h } = { ...props };
+
   const [focusX, setFocusX] = useState(0);
   const [focusY, setFocusY] = useState(0);
   const [map, setMap] = useState([ ]);
   
-  if (map.length < WIDTH) {
-    for (let x = 0; x < WIDTH; x ++) {
-      if (map.length < WIDTH) {
+  if (map.length < w) {
+    for (let x = 0; x < w; x ++) {
+      if (map.length < w) {
         map.push([ ]);
       }
-      for (let y = 0; y < HEIGHT; y ++) {
-        if (map.length < WIDTH) {
+      for (let y = 0; y < h; y ++) {
+        if (map.length < w) {
           map[x].push([ ]);
         }
         map[x][y] = {
@@ -129,7 +129,7 @@ function MapGrid (props) {
           break;
       }
       if (dir) {
-        if (newX < 0 || newX >= WIDTH || newY < 0 || newY >= HEIGHT) {
+        if (newX < 0 || newX >= w || newY < 0 || newY >= h) {
           return;
         }
         const mapCopy = [ ...map ];
@@ -139,8 +139,6 @@ function MapGrid (props) {
         setFocusX(newX);
         setFocusY(newY);
         setMap(mapCopy);
-        // console.log('INPUT: dir = ' + dir);
-        // document.getElementById('debug').innerHTML += '<div>KEYPRESS ' + event.key + ' found state focus: ' + focusX + ',' + focusY + ', change to ' + newX + ',' + newY + '</div>';
       }
     };
   
@@ -153,12 +151,10 @@ function MapGrid (props) {
   /* focusX={focusX} focusY={focusY} */
   
   return (
-    <div className="page-map">
-      <MapGridTable
-        map={map}
-        handleOnClick={(e) => handleOnClick(e)}
-      />
-    </div>
+    <MapGridTable
+      map={map}
+      handleOnClick={(e) => handleOnClick(e)}
+    />
   );
 }
 

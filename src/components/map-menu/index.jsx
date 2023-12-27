@@ -10,16 +10,26 @@ function PageMenu (props) {
 
   const newMapOnClick = async () => {
     try {
+      const data = [];
+      for (let i = 0; i < 25; i ++) {
+        data.push([]);
+        for (let j = 0; j < 25; j ++) {
+          data[i].push({});
+        }
+      }
+
       const id = await db.maps.add({
         name: 'Untitled Map',
         width: 25,
         height: 25,
         created: Date.now(),
         edited: Date.now(),
+        data: data,
       });
-      console.log('added id:', id);
+      console.log('added map id:', id);
+
     } catch (error) {
-      setStatus(`Failed to add new map: ${error}`);
+      console.log(`Failed to add new map: ${error}`);
     }
   };
 

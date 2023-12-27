@@ -1,7 +1,6 @@
 import Dexie from 'dexie';
 
-export const db = new Dexie('maps');
+export const db = new Dexie('userdata');
 db.version(1).stores({
-  maps: '++id, name, width, height, created, edited' // Primary key and indexed props
+  maps: '++id, name, width, height, created, edited, data',
 });
-console.log('db', db);
