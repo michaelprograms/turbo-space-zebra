@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Button, Card, CardList } from '@blueprintjs/core';
 import { useLiveQuery } from 'dexie-react-hooks';
+
 import { db } from '../../data';
 
 import './map-menu.css';
 
-function PageMenu (props) {
+function PageMenu () {
   const mapsData = useLiveQuery(() => db.maps.toArray());
 
   const newMapOnClick = async () => {

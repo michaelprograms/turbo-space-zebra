@@ -47,8 +47,6 @@ function MapGrid (props) {
   const { mapData } = { ...props };
   const { name, id, width, height, data } = { ...mapData };
 
-  console.log('MapGrid', mapData);
-
   const [focusX, setFocusX] = useState(0);
   const [focusY, setFocusY] = useState(0);
   const [map, setMap] = useState(data);
@@ -130,8 +128,6 @@ function MapGrid (props) {
       document.removeEventListener('keydown', handleKeyDown);
     }
   }, [focusX, focusY, map]);
-  
-  /* focusX={focusX} focusY={focusY} */
   
   return (
     <MapGridTable
