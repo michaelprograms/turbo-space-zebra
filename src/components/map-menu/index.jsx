@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Button, Card, CardList, Classes, Section } from '@blueprintjs/core';
-import { db } from '../../data';
+import { Button, Card, CardList } from '@blueprintjs/core';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../../data';
 
 import './map-menu.css';
 
@@ -17,6 +17,7 @@ function PageMenu (props) {
           data[i].push({});
         }
       }
+      data[0][0].focus = true;
 
       const id = await db.maps.add({
         name: 'Untitled Map',

@@ -1,12 +1,11 @@
+import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 import MapGrid from '../../components/map-grid';
-
 import { db } from '../../data';
 
 import './map.css';
-import { Fragment } from 'react';
-import { useLiveQuery } from 'dexie-react-hooks';
 
 function Map () {
   let { id } = useParams();
@@ -23,7 +22,7 @@ function Map () {
       mapData ?
         <Fragment>
           <h3>{mapData.name} #{mapData.id}</h3>
-          <MapGrid w={mapData.width} h={mapData.height} />
+          <MapGrid mapData={mapData} w={mapData.width} h={mapData.height} />
         </Fragment>
         :
         <h3>Loading...</h3>

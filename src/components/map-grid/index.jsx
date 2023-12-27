@@ -11,9 +11,7 @@ function MapGridTableCell (props) {
       onClick={e => props.handleOnClick(e)}
       x={x}
       y={y}
-    >
-      {x},{y}
-    </td>
+    ></td>
   );
 }
 
@@ -30,8 +28,8 @@ function MapGridTable (props) {
                 return (
                   <MapGridTableCell
                     key={x+"-"+y}
-                    x={item.x}
-                    y={item.y}
+                    x={x}
+                    y={y}
                     focus={item.focus}
                     handleOnClick={e => props.handleOnClick(e)}
                   />
@@ -46,41 +44,26 @@ function MapGridTable (props) {
 }
 
 function MapGrid (props) {
-  const { w, h } = { ...props };
+  const { mapData } = { ...props };
+  const { name, id, width, height, data } = { ...mapData };
+
+  console.log('MapGrid', mapData);
 
   const [focusX, setFocusX] = useState(0);
   const [focusY, setFocusY] = useState(0);
-  const [map, setMap] = useState([ ]);
-  
-  if (map.length < w) {
-    for (let x = 0; x < w; x ++) {
-      if (map.length < w) {
-        map.push([ ]);
-      }
-      for (let y = 0; y < h; y ++) {
-        if (map.length < w) {
-          map[x].push([ ]);
-        }
-        map[x][y] = {
-          x: x,
-          y: y,
-          focus: focusX === x && focusY === y,
-        };
-      }
-    }
-  }
+  const [map, setMap] = useState(data);
 
   const handleOnClick = (event) =>  {
       const newX = event.target.getAttribute('x');
       const newY = event.target.getAttribute('y');
       const mapCopy = [ ...map ];
-      mapCopy[focusX][focusY].focus = false;
+      delete mapCopy[focusX][focusY].focus;
       mapCopy[newX][newY].focus = true;
       setFocusX(newX);
       setFocusY(newY);
       setMap(mapCopy);
-  }
-      
+  };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       let dir;
@@ -129,12 +112,12 @@ function MapGrid (props) {
           break;
       }
       if (dir) {
-        if (newX < 0 || newX >= w || newY < 0 || newY >= h) {
+        if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
           return;
         }
         const mapCopy = [ ...map ];
         event.preventDefault();
-        mapCopy[focusX][focusY].focus = false;
+        delete mapCopy[focusX][focusY].focus;
         mapCopy[newX][newY].focus = true;
         setFocusX(newX);
         setFocusY(newY);
