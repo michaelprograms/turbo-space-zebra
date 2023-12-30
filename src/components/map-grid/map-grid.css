@@ -5,6 +5,11 @@ div.map-grid-wrapper {
 
   .map-grid-controls {
     width: 200px;
+
+    .control {
+      width: 90%;
+      margin: 0 auto;
+    }
   }
   .map-grid {
     user-select: none;
