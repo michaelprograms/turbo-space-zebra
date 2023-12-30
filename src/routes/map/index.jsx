@@ -1,7 +1,7 @@
 import { Fragment, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Button } from '@blueprintjs/core';
+import { Alignment, Button, Navbar } from '@blueprintjs/core';
 import html2canvas from 'html2canvas';
 
 import MapGrid from '../../components/map-grid';
@@ -44,10 +44,14 @@ function Map () {
       {
       mapData ?
         <Fragment>
-          <div>
-            <Button icon="floppy-disk" onClick={e => saveGrid(e)}>Save</Button>
-            <Button icon="print" onClick={e => printGrid(e)}>Print</Button>
-          </div>
+          <Navbar>
+            <Navbar.Group align={Alignment.LEFT}>
+              <Navbar.Heading>Turbo Space Zebra</Navbar.Heading>
+              <Navbar.Divider />
+              <Button className="bp5-minimal" icon="floppy-disk" onClick={e => saveGrid(e)} text="Save" />
+              <Button className="bp5-minimal" icon="print" onClick={e => printGrid(e)} text="Print" />
+            </Navbar.Group>
+          </Navbar>
           <MapGrid
             mapData={mapData}
             ref={gridRef}
