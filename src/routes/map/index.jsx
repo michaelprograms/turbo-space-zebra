@@ -23,8 +23,8 @@ function Map () {
     html2canvas(gridRef.current).then((canvas) => {
       const base64image = canvas.toDataURL('image/png');
       const newWindow = window.open();
-      newWindow.document.write('<html><head><title>Map Image</title></head><body>');
-      newWindow.document.write('<img src="' + base64image + '" alt="Preview"/>');
+      newWindow.document.write(`<html><head><title>${mapData.name}</title></head><body>`);
+      newWindow.document.write(`<img src="${base64image}" alt="${mapData.name}"/>`);
       newWindow.document.write('</body></html>');
     });
   };
