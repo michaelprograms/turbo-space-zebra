@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import './map-grid.css';
 
@@ -15,35 +15,7 @@ function MapGridTableCell (props) {
   );
 }
 
-function MapGridTable (props) {
-  const { map } = { ...props };
-
-  return (
-    <table className="map-grid">
-      <tbody>
-        {map.map((row,x) => {
-          return (
-            <tr key={"row-"+x}>
-              {row.map((item,y) => {
-                return (
-                  <MapGridTableCell
-                    key={x+"-"+y}
-                    x={x}
-                    y={y}
-                    focus={item.focus}
-                    handleOnClick={e => props.handleOnClick(e)}
-                  />
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-}
-
-function MapGrid (props) {
+const MapGrid = forwardRef(function MapGrid (props, ref) {
   const { mapData } = { ...props };
   const { name, id, width, height, data } = { ...mapData };
 
@@ -52,14 +24,14 @@ function MapGrid (props) {
   const [map, setMap] = useState(data);
 
   const handleOnClick = (event) =>  {
-      const newX = event.target.getAttribute('x');
-      const newY = event.target.getAttribute('y');
-      const mapCopy = [ ...map ];
-      delete mapCopy[focusX][focusY].focus;
-      mapCopy[newX][newY].focus = true;
-      setFocusX(newX);
-      setFocusY(newY);
-      setMap(mapCopy);
+    const newX = event.target.getAttribute('x');
+    const newY = event.target.getAttribute('y');
+    const mapCopy = [ ...map ];
+    delete mapCopy[focusX][focusY].focus;
+    mapCopy[newX][newY].focus = true;
+    setFocusX(newX);
+    setFocusY(newY);
+    setMap(mapCopy);
   };
 
   useEffect(() => {
@@ -130,11 +102,35 @@ function MapGrid (props) {
   }, [focusX, focusY, map]);
   
   return (
-    <MapGridTable
-      map={map}
-      handleOnClick={(e) => handleOnClick(e)}
-    />
+    <div>
+      <table className="map-grid" ref={ref} >
+        <tbody>
+          {map.map((row,x) => {
+            return (
+              <tr key={"row-"+x}>
+                {row.map((item,y) => {
+                  return (
+                    <MapGridTableCell
+                      key={x+"-"+y}
+                      x={x}
+                      y={y}
+                      focus={item.focus}
+                      handleOnClick={e => handleOnClick(e)}
+                    />
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      {/* <MapGridTable
+        ref={ref}
+        map={map}
+        handleOnClick={e => handleOnClick(e)}
+      /> */}
+    </div>
   );
-}
+});
 
 export default MapGrid;

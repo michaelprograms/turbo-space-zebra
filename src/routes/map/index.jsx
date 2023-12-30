@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Button, EditableText } from '@blueprintjs/core';
@@ -26,8 +26,9 @@ function Map () {
     }
   };
 
+  const gridRef = useRef(null);
   const printGrid = async (event) =>  {
-    html2canvas(document.body).then((canvas) => {
+    html2canvas(gridRef.current).then((canvas) => {
       const base64image = canvas.toDataURL('image/png');
       window.location.href = base64image;
     });
@@ -50,7 +51,10 @@ function Map () {
               <Button icon="print" onClick={e => printGrid(e)}>Print</Button>
             </div>
           </div>
-          <MapGrid mapData={mapData} />
+          <MapGrid
+            mapData={mapData}
+            ref={gridRef}
+          />
         </Fragment>
         :
         <h3>Loading...</h3>
