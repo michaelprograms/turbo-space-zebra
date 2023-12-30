@@ -22,8 +22,18 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   const { mapData } = { ...props };
   const { name, id, width, height, data } = { ...mapData };
 
-  const [focusX, setFocusX] = useState(0);
-  const [focusY, setFocusY] = useState(0);
+  // find initial saved focus
+  let focusXInitial = 0, focusYInitial = 0;
+  for (let x = 0; x < data.length; x ++) {
+    for (let y = 0; y < data[x].length; y ++) {
+      if(data[x][y].focus) {
+        focusXInitial = x;
+        focusYInitial = y;
+      }
+    }
+  }
+  const [focusX, setFocusX] = useState(focusXInitial);
+  const [focusY, setFocusY] = useState(focusYInitial);
   const [map, setMap] = useState(data);
 
   const confirmEditTitle = async (text) => {

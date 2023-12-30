@@ -19,7 +19,7 @@ function Map () {
   console.log('Loading Map', mapData);
 
   const gridRef = useRef(null);
-  const printGrid = async (event) =>  {
+  const printGrid = async (event) => {
     html2canvas(gridRef.current).then((canvas) => {
       const base64image = canvas.toDataURL('image/png');
       const newWindow = window.open();
@@ -27,6 +27,16 @@ function Map () {
       newWindow.document.write('<img src="' + base64image + '" alt="Preview"/>');
       newWindow.document.write('</body></html>');
     });
+  };
+
+  const saveGrid = async (event) => {
+    try {
+      await db.maps.where('id').equals(+id).modify(mapData);
+      console.log('updated map');
+
+    } catch (error) {
+      console.log(`Failed to update map: ${error}`);
+    }
   };
 
   return (
