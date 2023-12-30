@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { EditableText } from '@blueprintjs/core';
+import { Button, EditableText } from '@blueprintjs/core';
+import html2canvas from 'html2canvas';
 
 import MapGrid from '../../components/map-grid';
 import { db } from '../../data';
@@ -25,6 +26,13 @@ function Map () {
     }
   };
 
+  const printGrid = async (event) =>  {
+    html2canvas(document.body).then((canvas) => {
+      const base64image = canvas.toDataURL('image/png');
+      window.location.href = base64image;
+    });
+  };
+
   return (
     <div className="map">
       {
@@ -38,6 +46,9 @@ function Map () {
               defaultValue={mapData.name}
             />
             <div>#{mapData.id}</div>
+            <div>
+              <Button icon="print" onClick={e => printGrid(e)}>Print</Button>
+            </div>
           </div>
           <MapGrid mapData={mapData} />
         </Fragment>
