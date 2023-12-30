@@ -2,17 +2,20 @@ div.map-grid-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 
-  .map-title {
-    font-size: 24px;
+  .map-grid-controls {
+    width: 200px;
   }
   .map-grid {
     user-select: none;
     border-spacing: 0;
     display: flex;
     flex-direction: column;
+    flex-grow: 2;
 
+    .map-title {
+      font-size: 24px;
+    }
     .map-grid-row {
       display: flex;
     }

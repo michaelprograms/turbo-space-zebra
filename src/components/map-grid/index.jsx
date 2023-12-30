@@ -120,6 +120,16 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   
   return (
     <div className="map-grid-wrapper">
+      <div className="map-grid-controls">
+        <div>Border Width</div>
+        <div>Border Color</div>
+        <div>Border Radius</div>
+        <div>Cell Width</div>
+        <div>Cell Color</div>
+        <div>NW  N  NE</div>
+        <div>W      E</div>
+        <div>SW  S  SE</div>
+      </div>
       <div className="map-grid" ref={ref} >
         <EditableText
           className="map-title"
