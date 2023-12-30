@@ -6,12 +6,14 @@ function MapGridTableCell (props) {
   const { x, y, focus } = { ...props };
 
   return (
-    <td
-      className={`${focus ? "focus" : ""}`}
+    <div
+      className={`map-grid-cell ${focus ? "focus" : ""}`}
       onClick={e => props.handleOnClick(e)}
       x={x}
       y={y}
-    ></td>
+    >
+      <div className="cell-room"></div>
+    </div>
   );
 }
 
@@ -24,8 +26,8 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   const [map, setMap] = useState(data);
 
   const handleOnClick = (event) =>  {
-    const newX = event.target.getAttribute('x');
-    const newY = event.target.getAttribute('y');
+    const newX = event.currentTarget.getAttribute('x');
+    const newY = event.currentTarget.getAttribute('y');
     const mapCopy = [ ...map ];
     delete mapCopy[focusX][focusY].focus;
     mapCopy[newX][newY].focus = true;
@@ -102,33 +104,24 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   }, [focusX, focusY, map]);
   
   return (
-    <div>
-      <table className="map-grid" ref={ref} >
-        <tbody>
-          {map.map((row,x) => {
-            return (
-              <tr key={"row-"+x}>
-                {row.map((item,y) => {
-                  return (
-                    <MapGridTableCell
-                      key={x+"-"+y}
-                      x={x}
-                      y={y}
-                      focus={item.focus}
-                      handleOnClick={e => handleOnClick(e)}
-                    />
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {/* <MapGridTable
-        ref={ref}
-        map={map}
-        handleOnClick={e => handleOnClick(e)}
-      /> */}
+    <div className="map-grid" ref={ref} >
+      {map.map((row,x) => {
+        return (
+          <div className="map-grid-row" key={"row-"+x}>
+            {row.map((item,y) => {
+              return (
+                <MapGridTableCell
+                  key={x+"-"+y}
+                  x={x}
+                  y={y}
+                  focus={item.focus}
+                  handleOnClick={e => handleOnClick(e)}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 });

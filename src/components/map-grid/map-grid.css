@@ -1,22 +1,31 @@
-table.map-grid {
+div.map-grid {
     user-select: none;
     border-spacing: 0;
-}
-/* table.map-grid tr {
 
-} */
-table.map-grid td {
-    width: 30px;
-    max-width: 30px;
-    height: 30px;
-    max-height: 30px;
-    font-size: 9px;
-    overflow: hidden;
-    text-align: center;
-}
-table.map-grid td:hover {
-    background-color: #AAA;
-}
-table.map-grid td.focus {
-    background-color: #999;
+    .map-grid-row {
+        display: flex;
+    }
+    .map-grid-cell {
+        width: 35px;
+        height: 35px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: #AAA;
+        }
+        &.focus {
+            background-color: #999;
+        }
+
+        .cell-room {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            box-sizing: border-box;
+        }
+    }
 }
