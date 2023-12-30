@@ -37,11 +37,7 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   const [map, setMap] = useState(data);
 
   const confirmEditTitle = async (text) => {
-    try {
-      await db.maps.where('id').equals(+id).modify({ name: text });
-    } catch (error) {
-      console.log(`Failed to add update map name: ${error}`);
-    }
+    mapData.name = text;
   };
   
   const handleOnClick = (event) =>  {
