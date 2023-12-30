@@ -1,43 +1,43 @@
 div.map-grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .map-title {
+    font-size: 24px;
+  }
+  .map-grid {
+    user-select: none;
+    border-spacing: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
 
-    .map-title {
-        font-size: 24px;
+    .map-grid-row {
+      display: flex;
     }
-    .map-grid {
-        user-select: none;
-        border-spacing: 0;
-        display: flex;
-        flex-direction: column;
+    .map-grid-cell {
+      width: 35px;
+      height: 35px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .map-grid-row {
-            display: flex;
-        }
-        .map-grid-cell {
-            width: 35px;
-            height: 35px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+      &:hover {
+        background-color: #AAA;
+      }
+      &.focus {
+        background-color: #999;
+      }
 
-            &:hover {
-                background-color: #AAA;
-            }
-            &.focus {
-                background-color: #999;
-            }
-
-            .cell-room {
-                width: 19px;
-                height: 19px;
-                border-radius: 50%;
-                border: 2px solid #333;
-                box-sizing: border-box;
-            }
-        }
+      .cell-room {
+        width: 19px;
+        height: 19px;
+        border-radius: 50%;
+        border: 2px solid #333;
+        box-sizing: border-box;
+      }
     }
+  }
 }
