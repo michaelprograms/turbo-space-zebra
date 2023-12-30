@@ -30,7 +30,10 @@ function Map () {
   const printGrid = async (event) =>  {
     html2canvas(gridRef.current).then((canvas) => {
       const base64image = canvas.toDataURL('image/png');
-      window.location.href = base64image;
+      const newWindow = window.open();
+      newWindow.document.write('<html><head><title>Map Image</title></head><body>');
+      newWindow.document.write('<img src="' + base64image + '" alt="Preview"/>');
+      newWindow.document.write('</body></html>');
     });
   };
 
