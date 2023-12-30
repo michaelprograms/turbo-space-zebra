@@ -104,24 +104,26 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   }, [focusX, focusY, map]);
   
   return (
-    <div className="map-grid" ref={ref} >
-      {map.map((row,x) => {
-        return (
-          <div className="map-grid-row" key={"row-"+x}>
-            {row.map((item,y) => {
-              return (
-                <MapGridTableCell
-                  key={x+"-"+y}
-                  x={x}
-                  y={y}
-                  focus={item.focus}
-                  handleOnClick={e => handleOnClick(e)}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+    <div className="map-grid-wrapper">
+      <div className="map-grid" ref={ref} >
+        {map.map((row,x) => {
+          return (
+            <div className="map-grid-row" key={"row-"+x}>
+              {row.map((item,y) => {
+                return (
+                  <MapGridTableCell
+                    key={x+"-"+y}
+                    x={x}
+                    y={y}
+                    focus={item.focus}
+                    handleOnClick={e => handleOnClick(e)}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 });

@@ -1,31 +1,37 @@
-div.map-grid {
-    user-select: none;
-    border-spacing: 0;
+div.map-grid-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .map-grid-row {
-        display: flex;
-    }
-    .map-grid-cell {
-        width: 35px;
-        height: 35px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .map-grid {
+        user-select: none;
+        border-spacing: 0;
 
-        &:hover {
-            background-color: #AAA;
+        .map-grid-row {
+            display: flex;
         }
-        &.focus {
-            background-color: #999;
-        }
+        .map-grid-cell {
+            width: 35px;
+            height: 35px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        .cell-room {
-            width: 19px;
-            height: 19px;
-            border-radius: 50%;
-            border: 2px solid #333;
-            box-sizing: border-box;
+            &:hover {
+                background-color: #AAA;
+            }
+            &.focus {
+                background-color: #999;
+            }
+
+            .cell-room {
+                width: 19px;
+                height: 19px;
+                border-radius: 50%;
+                border: 2px solid #333;
+                box-sizing: border-box;
+            }
         }
     }
 }
