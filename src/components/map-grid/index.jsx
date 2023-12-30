@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
+import { EditableText } from '@blueprintjs/core';
 
 import './map-grid.css';
 
@@ -25,6 +26,14 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   const [focusY, setFocusY] = useState(0);
   const [map, setMap] = useState(data);
 
+  const confirmEditTitle = async (text) => {
+    try {
+      await db.maps.where('id').equals(+id).modify({ name: text });
+    } catch (error) {
+      console.log(`Failed to add update map name: ${error}`);
+    }
+  };
+  
   const handleOnClick = (event) =>  {
     const newX = event.currentTarget.getAttribute('x');
     const newY = event.currentTarget.getAttribute('y');
@@ -106,6 +115,12 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   return (
     <div className="map-grid-wrapper">
       <div className="map-grid" ref={ref} >
+        <EditableText
+          className="map-title"
+          maxLength="64"
+          onConfirm={(e) => confirmEditTitle(e)}
+          defaultValue={name}
+        />
         {map.map((row,x) => {
           return (
             <div className="map-grid-row" key={"row-"+x}>

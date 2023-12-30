@@ -1,7 +1,7 @@
 import { Fragment, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Button, EditableText } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import html2canvas from 'html2canvas';
 
 import MapGrid from '../../components/map-grid';
@@ -17,14 +17,6 @@ function Map () {
   }, [id]);
 
   console.log('Loading Map', mapData);
-
-  const confirmEditTitle = async (text) => {
-    try {
-      await db.maps.where('id').equals(+id).modify({ name: text });
-    } catch (error) {
-      console.log(`Failed to add update map name: ${error}`);
-    }
-  };
 
   const gridRef = useRef(null);
   const printGrid = async (event) =>  {
@@ -43,16 +35,8 @@ function Map () {
       mapData ?
         <Fragment>
           <div>
-            <EditableText
-              intent="primary"
-              maxLength="64"
-              onConfirm={(e) => confirmEditTitle(e)}
-              defaultValue={mapData.name}
-            />
-            <div>#{mapData.id}</div>
-            <div>
-              <Button icon="print" onClick={e => printGrid(e)}>Print</Button>
-            </div>
+            <Button icon="floppy-disk" onClick={e => saveGrid(e)}>Save</Button>
+            <Button icon="print" onClick={e => printGrid(e)}>Print</Button>
           </div>
           <MapGrid
             mapData={mapData}
