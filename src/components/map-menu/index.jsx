@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Button, Card, CardList } from '@blueprintjs/core';
+import { Button, Card } from '@blueprintjs/core';
 import { useLiveQuery } from 'dexie-react-hooks';
 
+import { MapMenu, MapMenuCardList, MapMenuButtons } from './style.js';
 import { db } from '../../data';
-
-import './map-menu.css';
 
 function PageMenu () {
   const mapsData = useLiveQuery(() => db.maps.toArray());
@@ -36,20 +35,20 @@ function PageMenu () {
   };
 
   return (
-    <div className="map-menu">
-      <div className="map-buttons">
+    <MapMenu>
+      <MapMenuButtons>
         <Button text="Add new map" icon="add" intent="primary" onClick={newMapOnClick} />
-      </div>
-      <CardList className="maps">
-      {mapsData?.map((map) => (
-        <Link to={"/map/"+map.id} key={map.id}>
-          <Card interactive={true} >
-            <span>{map.name}, {map.width}x{map.height}</span>
-          </Card>
-        </Link>
-      ))}
-      </CardList>
-    </div>
+      </MapMenuButtons>
+      <MapMenuCardList>
+        {mapsData?.map((map) => (
+          <Link to={"/map/"+map.id} key={map.id}>
+            <Card interactive={true} >
+              <span>{map.name}, {map.width}x{map.height}</span>
+            </Card>
+          </Link>
+        ))}
+      </MapMenuCardList>
+    </MapMenu>
   );
 }
 
