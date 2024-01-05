@@ -2,8 +2,6 @@ import { Alignment, Button, Navbar } from '@blueprintjs/core';
 
 import MapMenu from '../../components/map-menu';
 
-import './home.css';
-
 function Home () {
   return (
     <div className="home">

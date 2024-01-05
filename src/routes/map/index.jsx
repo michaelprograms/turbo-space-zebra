@@ -7,8 +7,6 @@ import html2canvas from 'html2canvas';
 import MapGrid from '../../components/map-grid';
 import { db } from '../../data';
 
-import './map.css';
-
 function Map () {
   let { id } = useParams();
 
