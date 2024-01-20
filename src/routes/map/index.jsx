@@ -5,7 +5,10 @@ import { Alignment, Button, Navbar } from '@blueprintjs/core';
 import html2canvas from 'html2canvas';
 
 import MapGrid from '../../components/map-grid';
+import MapControls from '../../components/map-controls';
 import { db } from '../../data';
+
+import { MapWrapper } from './style.js';
 
 function Map () {
   let { id } = useParams();
@@ -50,10 +53,15 @@ function Map () {
               <Button className="bp5-minimal" icon="print" onClick={e => printGrid(e)} text="Print" />
             </Navbar.Group>
           </Navbar>
-          <MapGrid
-            mapData={mapData}
-            ref={gridRef}
-          />
+          <MapWrapper>
+            <MapControls 
+              mapData={mapData}
+            />
+            <MapGrid
+              mapData={mapData}
+              ref={gridRef}
+            />
+          </MapWrapper>
         </Fragment>
         :
         <h3>Loading...</h3>

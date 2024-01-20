@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { EditableText, ButtonGroup, Button, Label, Section, Slider } from '@blueprintjs/core';
+import { EditableText } from '@blueprintjs/core';
 
 import './map-grid.css';
 
@@ -35,8 +35,6 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   const [focusX, setFocusX] = useState(focusXInitial);
   const [focusY, setFocusY] = useState(focusYInitial);
   const [map, setMap] = useState(data);
-  const [borderWidth, setBorderWidth] = useState(2);
-  const [borderRadius, setBorderRadius] = useState(50);
 
   const confirmEditTitle = async (text) => {
     mapData.name = text;
@@ -121,78 +119,30 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   }, [focusX, focusY, map]);
   
   return (
-    <div className="map-grid-wrapper">
-      <div className="map-grid-controls">
-        <Section>
-          <Label className="control">
-            Border Width
-            <Slider
-              min={0}
-              max={5}
-              stepSize={1}
-              labelStepSize={1}
-              onChange={n => setBorderWidth(n)}
-              value={borderWidth}
-            />
-          </Label>
-          <Label className="control">
-            Border Radius
-            <Slider
-              min={0}
-              max={50}
-              stepSize={1}
-              labelStepSize={10}
-              onChange={n => setBorderRadius(n)}
-              value={borderRadius}
-            />
-          </Label>
-        </Section>
-        <Section>
-          <label className="control">Links</label>
-          <br />
-          <ButtonGroup>
-            <Button icon="arrow-top-left" />
-            <Button icon="arrow-up" />
-            <Button icon="arrow-top-right" />
-          </ButtonGroup>
-          <br />
-          <ButtonGroup>
-            <Button icon="arrow-left" />
-            <Button icon="arrow-right" />
-          </ButtonGroup>
-          <br />
-          <ButtonGroup>
-            <Button icon="arrow-bottom-left" />
-            <Button icon="arrow-down" />
-            <Button icon="arrow-bottom-right" />
-          </ButtonGroup>
-        </Section>
-      </div>
-      <div className="map-grid" ref={ref} >
-        <EditableText
-          className="map-title"
-          maxLength="64"
-          onConfirm={(e) => confirmEditTitle(e)}
-          defaultValue={name}
-        />
-        {map.map((row,x) => {
-          return (
-            <div className="map-grid-row" key={"row-"+x}>
-              {row.map((item,y) => {
-                return (
-                  <MapGridTableCell
-                    key={x+"-"+y}
-                    x={x}
-                    y={y}
-                    focus={item.focus}
-                    handleOnClick={e => handleOnClick(e)}
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+    <div className="map-grid" ref={ref} >
+      <EditableText
+        className="map-title"
+        maxLength="64"
+        onConfirm={(e) => confirmEditTitle(e)}
+        defaultValue={name}
+      />
+      {map.map((row,x) => {
+        return (
+          <div className="map-grid-row" key={"row-"+x}>
+            {row.map((item,y) => {
+              return (
+                <MapGridTableCell
+                  key={x+"-"+y}
+                  x={x}
+                  y={y}
+                  focus={item.focus}
+                  handleOnClick={e => handleOnClick(e)}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 });
