@@ -5,12 +5,12 @@ import {
   MapTitleText,
   MapGridRow,
   MapGridCell,
-  MapGridRoomCircle,
+  MapGridRoom,
 } from './style.js';
 
 const MapGrid = forwardRef(function MapGrid (props, ref) {
   const { mapData } = { ...props };
-  const { name, id, width, height, data } = { ...mapData };
+  const { name, width, height, data } = { ...mapData };
 
   // find initial saved focus
   let focusXInitial = 0, focusYInitial = 0;
@@ -111,21 +111,25 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   return (
     <MapGridWrapper ref={ref} >
       <MapTitleText
-        maxLength="64"
+        maxLength='64'
         onConfirm={(e) => confirmEditTitle(e)}
         defaultValue={name}
       />
       {map.map((row,x) => (
-        <MapGridRow key={"row-"+x}>
-        {row.map((item,y) => (
+        <MapGridRow key={'row-'+x}>
+        {row.map((cell,y) => (
           <MapGridCell
-            $focused={item.focus ? 1 : 0}
-            key={x+"-"+y}
+            $focused={cell.focus ? 1 : 0}
+            key={x+'-'+y}
             onClick={e => handleOnClick(e)}
             x={x}
             y={y}
           >
-            <MapGridRoomCircle />
+            <MapGridRoom
+              $enabled={cell.enabled}
+              $borderColor={cell.borderColor}
+              $borderRadius={cell.borderRadius}
+            />
           </MapGridCell>
         ))}
         </MapGridRow>

@@ -31,10 +31,12 @@ export const MapGridCell = styled.div`
   }
 `;
 
-export const MapGridRoomCircle = styled.div`
+export const MapGridRoom = styled.div`
   width: 19px;
   height: 19px;
-  border-radius: 50%;
-  border: 2px solid #333;
+  border-radius: ${props => props.$borderRadius ? props.$borderRadius : '0%'};
+  border-width: 2px;
+  border-style: ${props => props.$enabled ? 'solid' : 'none'};
+  border-color: ${props => props.$borderColor ? props.$borderColor : 'transparent'};
   box-sizing: border-box;
 `
