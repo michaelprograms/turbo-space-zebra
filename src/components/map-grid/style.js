@@ -7,30 +7,6 @@ export const MapGridWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 2;
-
-  .map-grid-cell {
-    width: 35px;
-    height: 35px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-      background-color: #AAA;
-    }
-    &.focus {
-      background-color: #999;
-    }
-
-    .cell-room {
-      width: 19px;
-      height: 19px;
-      border-radius: 50%;
-      border: 2px solid #333;
-      box-sizing: border-box;
-    }
-  }
 `;
 
 export const MapTitleText = styled(EditableText)`
@@ -40,3 +16,25 @@ export const MapTitleText = styled(EditableText)`
 export const MapGridRow = styled.div`
   display: flex;
 `;
+
+export const MapGridCell = styled.div`
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.focused ? '#999' : 'transparent'};
+
+  &:hover {
+    background-color: #AAA;
+  }
+`;
+
+export const MapGridRoomCircle = styled.div`
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  box-sizing: border-box;
+`

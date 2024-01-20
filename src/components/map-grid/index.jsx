@@ -1,21 +1,12 @@
 import { forwardRef, useEffect, useState } from 'react';
 
-import { MapGridWrapper, MapTitleText, MapGridRow } from './style.js';
-
-function MapGridTableCell (props) {
-  const { x, y, focus } = { ...props };
-
-  return (
-    <div
-      className={`map-grid-cell ${focus ? "focus" : ""}`}
-      onClick={e => props.handleOnClick(e)}
-      x={x}
-      y={y}
-    >
-      <div className="cell-room"></div>
-    </div>
-  );
-}
+import {
+  MapGridWrapper,
+  MapTitleText,
+  MapGridRow,
+  MapGridCell,
+  MapGridRoomCircle,
+} from './style.js';
 
 const MapGrid = forwardRef(function MapGrid (props, ref) {
   const { mapData } = { ...props };
@@ -127,13 +118,15 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
       {map.map((row,x) => (
         <MapGridRow key={"row-"+x}>
         {row.map((item,y) => (
-          <MapGridTableCell
+          <MapGridCell
+            focused={item.focus}
             key={x+"-"+y}
+            onClick={e => handleOnClick(e)}
             x={x}
             y={y}
-            focus={item.focus}
-            handleOnClick={e => handleOnClick(e)}
-          />
+          >
+            <MapGridRoomCircle />
+          </MapGridCell>
         ))}
         </MapGridRow>
       ))}
