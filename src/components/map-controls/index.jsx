@@ -1,15 +1,24 @@
 import { useState } from 'react';
-import { ButtonGroup, Button, Label, Section, Slider } from '@blueprintjs/core';
+import { ButtonGroup, Button, Section, Slider, Switch } from '@blueprintjs/core';
 
 import { MapControlWrapper, MapControlLabel } from './style.js';
 
 function MapControls (props) {
-  const { mapData } = { ...props };
-  const [borderWidth, setBorderWidth] = useState(2);
-  const [borderRadius, setBorderRadius] = useState(50);
+
+  const handleSwitchEnable = (event) =>  {
+    // @TODO adjust focusX, focusY enabled to event.target.checked
+  };
 
   return (
     <MapControlWrapper>
+      <Section>
+        <Switch
+          alignIndicator='right'
+          labelElement='Enable Room'
+          innerLabelChecked='on' innerLabel='off'
+          onChange={e => handleSwitchEnable(e)}
+        />
+      </Section>
       <Section>
         <MapControlLabel>
           Border Width
@@ -18,8 +27,8 @@ function MapControls (props) {
             max={5}
             stepSize={1}
             labelStepSize={1}
-            onChange={n => setBorderWidth(n)}
-            value={borderWidth}
+            // onChange={n => setBorderWidth(n)}
+            // value={borderWidth}
           />
         </MapControlLabel>
         <MapControlLabel>
@@ -29,8 +38,8 @@ function MapControls (props) {
             max={50}
             stepSize={1}
             labelStepSize={10}
-            onChange={n => setBorderRadius(n)}
-            value={borderRadius}
+            // onChange={n => setBorderRadius(n)}
+            // value={borderRadius}
           />
         </MapControlLabel>
       </Section>
@@ -38,20 +47,20 @@ function MapControls (props) {
         <MapControlLabel>Links</MapControlLabel>
         <br />
         <ButtonGroup>
-          <Button icon="arrow-top-left" />
-          <Button icon="arrow-up" />
-          <Button icon="arrow-top-right" />
+          <Button icon='arrow-top-left' />
+          <Button icon='arrow-up' />
+          <Button icon='arrow-top-right' />
         </ButtonGroup>
         <br />
         <ButtonGroup>
-          <Button icon="arrow-left" />
-          <Button icon="arrow-right" />
+          <Button icon='arrow-left' />
+          <Button icon='arrow-right' />
         </ButtonGroup>
         <br />
         <ButtonGroup>
-          <Button icon="arrow-bottom-left" />
-          <Button icon="arrow-down" />
-          <Button icon="arrow-bottom-right" />
+          <Button icon='arrow-bottom-left' />
+          <Button icon='arrow-down' />
+          <Button icon='arrow-bottom-right' />
         </ButtonGroup>
       </Section>
     </MapControlWrapper>
