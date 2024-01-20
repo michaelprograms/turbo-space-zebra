@@ -24,7 +24,7 @@ export const MapGridCell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.focused ? '#999' : 'transparent'};
+  background-color: ${props => props.$focused ? '#999' : 'transparent'};
 
   &:hover {
     background-color: #AAA;

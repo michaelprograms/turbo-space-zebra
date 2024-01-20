@@ -119,7 +119,7 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
         <MapGridRow key={"row-"+x}>
         {row.map((item,y) => (
           <MapGridCell
-            focused={item.focus}
+            $focused={item.focus ? 1 : 0}
             key={x+"-"+y}
             onClick={e => handleOnClick(e)}
             x={x}
