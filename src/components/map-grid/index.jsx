@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { EditableText } from '@blueprintjs/core';
 
-import './map-grid.css';
+import { MapGridWrapper, MapTitleText, MapGridRow } from './style.js';
 
 function MapGridTableCell (props) {
   const { x, y, focus } = { ...props };
@@ -39,7 +38,7 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
   const confirmEditTitle = async (text) => {
     mapData.name = text;
   };
-  
+
   const handleOnClick = (event) =>  {
     const newX = event.currentTarget.getAttribute('x');
     const newY = event.currentTarget.getAttribute('y');
@@ -111,39 +110,34 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
         setMap(mapCopy);
       }
     };
-  
+
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     }
   }, [focusX, focusY, map]);
-  
+
   return (
-    <div className="map-grid" ref={ref} >
-      <EditableText
-        className="map-title"
+    <MapGridWrapper ref={ref} >
+      <MapTitleText
         maxLength="64"
         onConfirm={(e) => confirmEditTitle(e)}
         defaultValue={name}
       />
-      {map.map((row,x) => {
-        return (
-          <div className="map-grid-row" key={"row-"+x}>
-            {row.map((item,y) => {
-              return (
-                <MapGridTableCell
-                  key={x+"-"+y}
-                  x={x}
-                  y={y}
-                  focus={item.focus}
-                  handleOnClick={e => handleOnClick(e)}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
-    </div>
+      {map.map((row,x) => (
+        <MapGridRow key={"row-"+x}>
+        {row.map((item,y) => (
+          <MapGridTableCell
+            key={x+"-"+y}
+            x={x}
+            y={y}
+            focus={item.focus}
+            handleOnClick={e => handleOnClick(e)}
+          />
+        ))}
+        </MapGridRow>
+      ))}
+    </MapGridWrapper>
   );
 });
 
