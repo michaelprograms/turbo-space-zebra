@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Alignment, Button, Navbar } from '@blueprintjs/core';
@@ -13,11 +13,97 @@ import { MapWrapper } from './style.js';
 function Map () {
   let { id } = useParams();
 
-  const mapData = useLiveQuery(async () => {
-    return await db.maps.where({ id: +id }).first();
-  }, [id]);
+  const result = useLiveQuery(async () => {
+    const dbMap = await db.maps.where({ id: +id }).first();;
+    console.info('Loading Map', dbMap);
+    return dbMap;
+  }, [ id ]);
 
-  console.log('Loading Map', mapData);
+  const { name, width, height, focusX, focusY, data = [] } = { ...result };
+  const [mapFocusX, setMapFocusX] = useState(focusX);
+  const [mapFocusY, setMapFocusY] = useState(focusY);
+  const [mapData, setMapData] = useState(data);
+
+  useEffect(() => {
+    const isSameMapData = mapData.length === data.length && mapData.every((o, i) => Object.keys(o).length === Object.keys(data[i]).length && Object.keys(o).every(k => o[k] === data[i][k]));
+
+    if (!isSameMapData) {
+      setMapData(data);
+      setMapFocusX(focusX);
+      setMapFocusY(focusY);
+    }
+  }, [ data ]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      let newX = mapFocusX, newY = mapFocusY;
+      let dir;
+      switch (event.key) {
+        case 'End': case '1':
+          dir = 'SW';
+          newX ++;
+          newY --;
+          break;
+        case 'ArrowDown': case '2':
+          dir = 'S';
+          newX ++;
+          break;
+        case 'PageDown': case '3':
+          dir = 'SE';
+          newX ++;
+          newY ++;
+          break;
+        case 'ArrowLeft': case '4':
+          dir = 'W';
+          newY --;
+          break;
+        case 'Clear': case '5':
+          dir = '5';
+          break;
+        case 'ArrowRight': case '6':
+          dir = 'E';
+          newY ++;
+          break;
+        case 'Home': case '7':
+          dir = 'NW';
+          newX --;
+          newY --;
+          break;
+        case 'ArrowUp': case '8':
+          dir = 'N';
+          newX --;
+          break;
+        case 'PageUp': case '9':
+          dir = 'NE';
+          newX --;
+          newY ++;
+          break;
+        default:
+          break;
+      }
+      if (dir) {
+        if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
+          return;
+        }
+        event.preventDefault();
+        setMapFocusX(newX);
+        setMapFocusY(newY);
+        console.info('Focus', newX, newY);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [ mapFocusX, mapFocusY ]);
+
+  const handleGridOnClick = (event) =>  {
+    const newX = event.currentTarget.getAttribute('x');
+    const newY = event.currentTarget.getAttribute('y');
+    setMapFocusX(+newX);
+    setMapFocusY(+newY);
+    console.info('Focus', newX, newY);
+  };
 
   const gridRef = useRef(null);
   const printGrid = async (event) => {
@@ -30,36 +116,43 @@ function Map () {
     });
   };
 
-  const saveGrid = async (event) => {
+  const saveMapData = async (event) => {
     try {
-      await db.maps.where('id').equals(+id).modify(mapData);
-      console.log('updated map');
-
+      let newData = {
+        ...result,
+        focusX: mapFocusX,
+        focusY: mapFocusY,
+      };
+      await db.maps.where('id').equals(+id).modify(newData);
+      console.info('Saved map', newData);
     } catch (error) {
-      console.log(`Failed to update map: ${error}`);
+      console.log(`Failed to save map: ${error}`);
     }
   };
 
   return (
     <div className="map">
-      {
-      mapData ?
+      { result ?
         <Fragment>
           <Navbar>
             <Navbar.Group align={Alignment.LEFT}>
               <Navbar.Heading>Turbo Space Zebra</Navbar.Heading>
               <Navbar.Divider />
-              <Button className="bp5-minimal" icon="floppy-disk" onClick={e => saveGrid(e)} text="Save" />
+              <Button className="bp5-minimal" icon="floppy-disk" onClick={saveMapData} text="Save" />
               <Button className="bp5-minimal" icon="print" onClick={e => printGrid(e)} text="Print" />
             </Navbar.Group>
           </Navbar>
           <MapWrapper>
-            <MapControls 
-              mapData={mapData}
+            <MapControls
+              mapData={result}
             />
             <MapGrid
               mapData={mapData}
+              mapName={name}
+              focusX={mapFocusX}
+              focusY={mapFocusY}
               ref={gridRef}
+              handleGridOnClick={handleGridOnClick}
             />
           </MapWrapper>
         </Fragment>

@@ -17,20 +17,21 @@ function PageMenu () {
           data[i].push({});
         }
       }
-      data[0][0].focus = true;
 
       const id = await db.maps.add({
         name: 'Untitled Map',
+        focusX: 0,
+        focusY: 0,
         width: 25,
         height: 25,
         created: Date.now(),
         edited: Date.now(),
         data: data,
       });
-      console.log('added map id:', id);
+      console.info('Added map id:', id);
 
     } catch (error) {
-      console.log(`Failed to add new map: ${error}`);
+      console.log(`Failed to add map: ${error}`);
     }
   };
 

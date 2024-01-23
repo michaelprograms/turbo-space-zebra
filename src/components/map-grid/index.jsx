@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef } from 'react';
 
 import {
   MapGridWrapper,
@@ -9,131 +9,47 @@ import {
 } from './style.js';
 
 const MapGrid = forwardRef(function MapGrid (props, ref) {
-  const { mapData } = { ...props };
-  const { name, width, height, data } = { ...mapData };
-
-  // find initial saved focus
-  let focusXInitial = 0, focusYInitial = 0;
-  for (let x = 0; x < data.length; x ++) {
-    for (let y = 0; y < data[x].length; y ++) {
-      if(data[x][y].focus) {
-        focusXInitial = x;
-        focusYInitial = y;
-      }
-    }
-  }
-  const [focusX, setFocusX] = useState(focusXInitial);
-  const [focusY, setFocusY] = useState(focusYInitial);
-  const [map, setMap] = useState(data);
+  const { mapData, mapName, focusX, focusY, handleGridOnClick } = { ...props };
+  const { data } = { ...mapData };
 
   const confirmEditTitle = async (text) => {
     mapData.name = text;
   };
 
-  const handleOnClick = (event) =>  {
-    const newX = event.currentTarget.getAttribute('x');
-    const newY = event.currentTarget.getAttribute('y');
-    const mapCopy = [ ...map ];
-    delete mapCopy[focusX][focusY].focus;
-    mapCopy[newX][newY].focus = true;
-    setFocusX(newX);
-    setFocusY(newY);
-    setMap(mapCopy);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      let dir;
-      let newX = focusX, newY = focusY;
-      switch (event.key) {
-        case 'End': case '1':
-          dir = 'SW';
-          newX ++;
-          newY --;
-          break;
-        case 'ArrowDown': case '2':
-          dir = 'S';
-          newX ++;
-          break;
-        case 'PageDown': case '3':
-          dir = 'SE';
-          newX ++;
-          newY ++;
-          break;
-        case 'ArrowLeft': case '4':
-          dir = 'W';
-          newY --;
-          break;
-        case 'Clear': case '5':
-          dir = '5';
-          break;
-        case 'ArrowRight': case '6':
-          dir = 'E';
-          newY ++;
-          break;
-        case 'Home': case '7':
-          dir = 'NW';
-          newX --;
-          newY --;
-          break;
-        case 'ArrowUp': case '8':
-          dir = 'N';
-          newX --;
-          break;
-        case 'PageUp': case '9':
-          dir = 'NE';
-          newX --;
-          newY ++;
-          break;
-        default:
-          break;
-      }
-      if (dir) {
-        if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
-          return;
-        }
-        const mapCopy = [ ...map ];
-        event.preventDefault();
-        delete mapCopy[focusX][focusY].focus;
-        mapCopy[newX][newY].focus = true;
-        setFocusX(newX);
-        setFocusY(newY);
-        setMap(mapCopy);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [focusX, focusY, map]);
-
   return (
     <MapGridWrapper ref={ref} >
-      <MapTitleText
-        maxLength='64'
-        onConfirm={(e) => confirmEditTitle(e)}
-        defaultValue={name}
-      />
-      {map.map((row,x) => (
-        <MapGridRow key={'row-'+x}>
-        {row.map((cell,y) => (
-          <MapGridCell
-            $focused={cell.focus ? 1 : 0}
-            key={x+'-'+y}
-            onClick={e => handleOnClick(e)}
-            x={x}
-            y={y}
-          >
-            <MapGridRoom
-              $enabled={cell.enabled}
-              $borderColor={cell.borderColor}
-              $borderRadius={cell.borderRadius}
-            />
-          </MapGridCell>
-        ))}
-        </MapGridRow>
-      ))}
+      { mapData ?
+        <MapTitleText
+          maxLength='64'
+          onConfirm={(e) => confirmEditTitle(e)}
+          defaultValue={mapName}
+        />
+        :
+        <h3>No map title yet</h3>
+      }
+      { mapData ?
+        mapData.map((row,x) => (
+          <MapGridRow key={'row-'+x}>
+          {row.map((cell,y) => (
+            <MapGridCell
+              $focused={x === focusX && y === focusY ? 1 : 0}
+              key={x+'-'+y}
+              onClick={handleGridOnClick}
+              x={x}
+              y={y}
+            >
+              <MapGridRoom
+                $enabled={cell.enabled}
+                $borderColor={cell.borderColor}
+                $borderRadius={cell.borderRadius}
+              />
+            </MapGridCell>
+          ))}
+          </MapGridRow>
+        ))
+        :
+        <h3>No map data yet</h3>
+      }
     </MapGridWrapper>
   );
 });
