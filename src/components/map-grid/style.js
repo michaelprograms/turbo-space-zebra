@@ -24,7 +24,7 @@ export const MapGridCell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.$focused ? '#999' : 'transparent'};
+  background-color: ${props => props.$focused ? '#CCC' : 'transparent'};
 
   &:hover {
     background-color: #AAA;
@@ -34,9 +34,9 @@ export const MapGridCell = styled.div`
 export const MapGridRoom = styled.div`
   width: 19px;
   height: 19px;
-  border-radius: ${props => props.$borderRadius ? props.$borderRadius : '0%'};
-  border-width: 2px;
+  border-radius: ${props => props.$borderRadius !== undefined ? props.$borderRadius + '%' : '0%'};
+  border-width: ${props => props.$borderWidth !== undefined ? props.$borderWidth + 'px' : '2px'};;
   border-style: ${props => props.$enabled ? 'solid' : 'none'};
-  border-color: ${props => props.$borderColor ? props.$borderColor : 'transparent'};
+  border-color: ${props => props.$borderColor !== undefined ? props.$borderColor : 'transparent'};
   box-sizing: border-box;
 `

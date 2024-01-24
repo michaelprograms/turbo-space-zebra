@@ -1,11 +1,29 @@
 import { styled } from 'styled-components';
-import { Label } from '@blueprintjs/core';
+import { ButtonGroup, Label, Slider, Switch } from '@blueprintjs/core';
 
 export const MapControlWrapper = styled.div`
-    width: 200px;
+  width: 250px;
+  padding: 20px;
 `;
 
 export const MapControlLabel = styled(Label)`
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 10px auto;
+`;
+
+export const MapControlSlider = styled(Slider)`
+  width: 90%;
+  margin: 10px auto;
+`;
+
+export const MapControlSwitch = styled(Switch)`
+  width: 90%;
+  margin: 10px auto;
+`;
+
+export const MapButtonGroupExits = styled(ButtonGroup)`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100px;
+  margin: 0 auto 10px auto;
 `;

@@ -24,6 +24,7 @@ function Map () {
   const [mapFocusY, setMapFocusY] = useState(focusY);
   const [mapData, setMapData] = useState(data);
 
+  // map data
   useEffect(() => {
     const isSameMapData = mapData.length === data.length && mapData.every((o, i) => Object.keys(o).length === Object.keys(data[i]).length && Object.keys(o).every(k => o[k] === data[i][k]));
 
@@ -34,6 +35,7 @@ function Map () {
     }
   }, [ data ]);
 
+  // focus
   useEffect(() => {
     const handleKeyDown = (event) => {
       let newX = mapFocusX, newY = mapFocusY;
@@ -88,7 +90,6 @@ function Map () {
         event.preventDefault();
         setMapFocusX(newX);
         setMapFocusY(newY);
-        console.info('Focus', newX, newY);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -97,12 +98,39 @@ function Map () {
     }
   }, [ mapFocusX, mapFocusY ]);
 
-  const handleGridOnClick = (event) =>  {
+  const handleGridOnClick = (event) => {
     const newX = event.currentTarget.getAttribute('x');
     const newY = event.currentTarget.getAttribute('y');
     setMapFocusX(+newX);
     setMapFocusY(+newY);
-    console.info('Focus', newX, newY);
+  };
+
+  // map controls
+  const handleControlEnable = async (event) => {
+    event.stopPropagation();
+
+    const mapCopy = [ ...mapData ];
+    mapCopy[mapFocusX][mapFocusY].enabled = event.target.checked;
+    if (mapCopy[mapFocusX][mapFocusY].borderRadius === undefined) {
+      mapCopy[mapFocusX][mapFocusY].borderRadius = 50;
+    }
+    if (mapCopy[mapFocusX][mapFocusY].borderWidth === undefined) {
+      mapCopy[mapFocusX][mapFocusY].borderWidth = 2;
+    }
+    if (mapCopy[mapFocusX][mapFocusY].borderColor === undefined) {
+      mapCopy[mapFocusX][mapFocusY].borderColor = '#999999';
+    }
+    setMapData(mapCopy);
+  };
+  const handleControlBorderRadius = async (event) => {
+    const mapCopy = [ ...mapData ];
+    mapCopy[mapFocusX][mapFocusY].borderRadius = event;
+    setMapData(mapCopy);
+  };
+  const handleControlBorderWidth = async (event) => {
+    const mapCopy = [ ...mapData ];
+    mapCopy[mapFocusX][mapFocusY].borderWidth = event;
+    setMapData(mapCopy);
   };
 
   const gridRef = useRef(null);
@@ -144,7 +172,12 @@ function Map () {
           </Navbar>
           <MapWrapper>
             <MapControls
-              mapData={result}
+              mapData={mapData}
+              focusX={mapFocusX}
+              focusY={mapFocusY}
+              handleControlEnable={handleControlEnable}
+              handleControlBorderRadius={handleControlBorderRadius}
+              handleControlBorderWidth={handleControlBorderWidth}
             />
             <MapGrid
               mapData={mapData}

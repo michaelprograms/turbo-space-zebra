@@ -10,7 +10,6 @@ import {
 
 const MapGrid = forwardRef(function MapGrid (props, ref) {
   const { mapData, mapName, focusX, focusY, handleGridOnClick } = { ...props };
-  const { data } = { ...mapData };
 
   const confirmEditTitle = async (text) => {
     mapData.name = text;
@@ -30,7 +29,7 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
       { mapData ?
         mapData.map((row,x) => (
           <MapGridRow key={'row-'+x}>
-          {row.map((cell,y) => (
+          {row.map((room,y) => (
             <MapGridCell
               $focused={x === focusX && y === focusY ? 1 : 0}
               key={x+'-'+y}
@@ -39,9 +38,10 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
               y={y}
             >
               <MapGridRoom
-                $enabled={cell.enabled}
-                $borderColor={cell.borderColor}
-                $borderRadius={cell.borderRadius}
+                $enabled={room.enabled}
+                $borderColor={room.borderColor}
+                $borderRadius={room.borderRadius}
+                $borderWidth={room.borderWidth}
               />
             </MapGridCell>
           ))}
