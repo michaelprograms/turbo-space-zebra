@@ -35,7 +35,24 @@ function Map () {
     }
   }, [ data ]);
 
-  // focus
+  const enableRoom = (x, y, value) => {
+    const mapCopy = [ ...mapData ];
+
+    mapCopy[mapFocusX][mapFocusY].enabled = value !== undefined ? value : !mapCopy[mapFocusX][mapFocusY].enabled;
+
+    if (mapCopy[mapFocusX][mapFocusY].borderRadius === undefined) {
+      mapCopy[mapFocusX][mapFocusY].borderRadius = 50;
+    }
+    if (mapCopy[mapFocusX][mapFocusY].borderWidth === undefined) {
+      mapCopy[mapFocusX][mapFocusY].borderWidth = 2;
+    }
+    if (mapCopy[mapFocusX][mapFocusY].borderColor === undefined) {
+      mapCopy[mapFocusX][mapFocusY].borderColor = '#999999';
+    }
+    return mapCopy;
+  };
+
+  // keyboard inputs
   useEffect(() => {
     const handleKeyDown = (event) => {
       let newX = mapFocusX, newY = mapFocusY;
@@ -80,6 +97,11 @@ function Map () {
           newX --;
           newY ++;
           break;
+        case ' ':
+          event.preventDefault();
+          const mapCopy = enableRoom(mapFocusX, mapFocusY);
+          setMapData(mapCopy);
+          break;
         default:
           break;
       }
@@ -96,7 +118,7 @@ function Map () {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     }
-  }, [ mapFocusX, mapFocusY ]);
+  }, [ mapFocusX, mapFocusY, mapData ]);
 
   const handleGridOnClick = (event) => {
     const newX = event.currentTarget.getAttribute('x');
@@ -108,18 +130,7 @@ function Map () {
   // map controls
   const handleControlEnable = async (event) => {
     event.stopPropagation();
-
-    const mapCopy = [ ...mapData ];
-    mapCopy[mapFocusX][mapFocusY].enabled = event.target.checked;
-    if (mapCopy[mapFocusX][mapFocusY].borderRadius === undefined) {
-      mapCopy[mapFocusX][mapFocusY].borderRadius = 50;
-    }
-    if (mapCopy[mapFocusX][mapFocusY].borderWidth === undefined) {
-      mapCopy[mapFocusX][mapFocusY].borderWidth = 2;
-    }
-    if (mapCopy[mapFocusX][mapFocusY].borderColor === undefined) {
-      mapCopy[mapFocusX][mapFocusY].borderColor = '#999999';
-    }
+    const mapCopy = enableRoom(mapFocusX, mapFocusY, event.target.checked);
     setMapData(mapCopy);
   };
   const handleControlBorderRadius = async (event) => {
@@ -133,6 +144,7 @@ function Map () {
     setMapData(mapCopy);
   };
 
+  // Print button
   const gridRef = useRef(null);
   const printGrid = async (event) => {
     html2canvas(gridRef.current).then((canvas) => {
@@ -144,6 +156,7 @@ function Map () {
     });
   };
 
+  // Save button
   const saveMapData = async (event) => {
     try {
       let newData = {
