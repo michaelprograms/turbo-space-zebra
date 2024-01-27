@@ -30,13 +30,3 @@ export const MapGridCell = styled.div`
     background-color: #AAA;
   }
 `;
-
-export const MapGridRoom = styled.div`
-  width: 19px;
-  height: 19px;
-  border-radius: ${props => props.$borderRadius !== undefined ? props.$borderRadius + '%' : '0%'};
-  border-width: ${props => props.$borderWidth !== undefined ? props.$borderWidth + 'px' : '2px'};;
-  border-style: ${props => props.$enabled ? 'solid' : 'none'};
-  border-color: ${props => props.$borderColor !== undefined ? props.$borderColor : 'transparent'};
-  box-sizing: border-box;
-`

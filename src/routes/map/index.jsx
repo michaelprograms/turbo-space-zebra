@@ -44,11 +44,37 @@ function Map () {
       mapCopy[mapFocusX][mapFocusY].borderRadius = 50;
     }
     if (mapCopy[mapFocusX][mapFocusY].borderWidth === undefined) {
-      mapCopy[mapFocusX][mapFocusY].borderWidth = 2;
+      mapCopy[mapFocusX][mapFocusY].borderWidth = 3;
     }
     if (mapCopy[mapFocusX][mapFocusY].borderColor === undefined) {
-      mapCopy[mapFocusX][mapFocusY].borderColor = '#999999';
+      mapCopy[mapFocusX][mapFocusY].borderColor = '#666666';
     }
+    if (mapCopy[mapFocusX][mapFocusY].fillColor === undefined) {
+      mapCopy[mapFocusX][mapFocusY].fillColor = '#999999';
+    }
+
+    const dirs = [
+      'north',
+      'northeast',
+      'east',
+      'southeast',
+      'south',
+      'southwest',
+      'west',
+      'northwest',
+    ];
+    for (let i = 0; i < dirs.length; i ++) {
+      if (mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Enabled'] === undefined) {
+        mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Enabled'] = false;
+      }
+      if (mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Width'] === undefined) {
+        mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Width'] = '#999999';
+      }
+      if (mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Color'] === undefined) {
+        mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Color'] = '#666666';
+      }
+    }
+
     return mapCopy;
   };
 

@@ -1,11 +1,12 @@
 import { forwardRef } from 'react';
 
+import MapGridRoom from '../map-grid-room';
+
 import {
   MapGridWrapper,
   MapTitleText,
   MapGridRow,
   MapGridCell,
-  MapGridRoom,
 } from './style.js';
 
 const MapGrid = forwardRef(function MapGrid (props, ref) {
@@ -38,10 +39,7 @@ const MapGrid = forwardRef(function MapGrid (props, ref) {
               y={y}
             >
               <MapGridRoom
-                $enabled={room.enabled}
-                $borderColor={room.borderColor}
-                $borderRadius={room.borderRadius}
-                $borderWidth={room.borderWidth}
+                room={room}
               />
             </MapGridCell>
           ))}
