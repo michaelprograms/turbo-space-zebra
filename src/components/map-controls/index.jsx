@@ -14,6 +14,7 @@ function MapControls (props) {
     handleControlBorderWidth,
     handleControlBorderColor,
     handleControlFillColor,
+    handleControlExit,
   } = { ...props };
 
   const [ enabled, setEnabled ] = useState(false);
@@ -21,10 +22,28 @@ function MapControls (props) {
   const [ borderWidth, setBorderWidth ] = useState(2);
   const [ borderColor, setBorderColor ] = useState('#666666');
   const [ fillColor, setFillColor ] = useState('#999999');
+  const [ exitNorth, setExitNorth ] = useState(false);
+  const [ exitNortheast, setExitNortheast ] = useState(false);
+  const [ exitEast, setExitEast ] = useState(false);
+  const [ exitSoutheast, setExitSoutheast ] = useState(false);
+  const [ exitSouth, setExitSouth ] = useState(false);
+  const [ exitSouthwest, setExitSouthwest ] = useState(false);
+  const [ exitWest, setExitWest ] = useState(false);
+  const [ exitNorthwest, setExitNorthwest ] = useState(false);
 
   useEffect(() => {
     const room = mapData?.[focusX]?.[focusY] || {};
+
     setEnabled(room.enabled !== undefined ? room.enabled : false);
+    setExitNorth(room.northEnabled !== undefined ? room.northEnabled : false);
+    setExitNortheast(room.northeastEnabled !== undefined ? room.northeastEnabled : false);
+    setExitEast(room.eastEnabled !== undefined ? room.eastEnabled : false);
+    setExitSoutheast(room.southeastEnabled !== undefined ? room.southeastEnabled : false);
+    setExitSouth(room.southEnabled !== undefined ? room.southEnabled : false);
+    setExitSouthwest(room.southwestEnabled !== undefined ? room.southwestEnabled : false);
+    setExitWest(room.westEnabled !== undefined ? room.westEnabled : false);
+    setExitNorthwest(room.northwestEnabled !== undefined ? room.northwestEnabled : false);
+
     setBorderRadius(room.borderRadius !== undefined ? room.borderRadius : 50);
     setBorderWidth(room.borderWidth !== undefined ? room.borderWidth : 2);
     setBorderColor(room.borderColor !== undefined ? room.borderColor : '#666666');
@@ -69,15 +88,41 @@ function MapControls (props) {
           />
           <MapControlLabel>Links</MapControlLabel>
           <MapButtonGroupExits>
-            <Button icon='arrow-top-left' />
-            <Button icon='arrow-up' />
-            <Button icon='arrow-top-right' />
-            <Button icon='arrow-left' />
-            <Button disabled={true} />
-            <Button icon='arrow-right' />
-            <Button icon='arrow-bottom-left' />
-            <Button icon='arrow-down' />
-            <Button icon='arrow-bottom-right' />
+            <Button
+              intent={exitNorthwest ? 'primary' : null} icon='arrow-top-left'
+              onClick={e => handleControlExit(e, 'northwest')}
+            />
+            <Button
+              intent={exitNorth ? 'primary' : null} icon='arrow-up'
+              onClick={e => handleControlExit(e, 'north')}
+            />
+            <Button
+              intent={exitNortheast ? 'primary' : null} icon='arrow-top-right'
+              onClick={e => handleControlExit(e, 'northeast')}
+            />
+            <Button
+              intent={exitWest ? 'primary' : null} icon='arrow-left'
+              onClick={e => handleControlExit(e, 'west')}
+            />
+            <Button
+              disabled={true}
+            />
+            <Button
+              intent={exitEast ? 'primary' : null} icon='arrow-right'
+              onClick={e => handleControlExit(e, 'east')}
+            />
+            <Button
+              intent={exitSouthwest ? 'primary' : null} icon='arrow-bottom-left'
+              onClick={e => handleControlExit(e, 'southwest')}
+            />
+            <Button
+              intent={exitSouth ? 'primary' : null} icon='arrow-down'
+              onClick={e => handleControlExit(e, 'south')}
+            />
+            <Button
+              intent={exitSoutheast ? 'primary' : null} icon='arrow-bottom-right'
+              onClick={e => handleControlExit(e, 'southeast')}
+            />
           </MapButtonGroupExits>
         </FormGroup>
       </Section>

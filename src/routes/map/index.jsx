@@ -179,6 +179,11 @@ function Map () {
     mapCopy[mapFocusX][mapFocusY].fillColor = event.hex;
     setMapData(mapCopy);
   };
+  const handleControlExit = async (event, dir) => {
+    const mapCopy = [ ...mapData ];
+    mapCopy[mapFocusX][mapFocusY][dir+'Enabled'] = !mapCopy[mapFocusX][mapFocusY][dir+'Enabled'];
+    setMapData(mapCopy);
+  };
 
   // Print button
   const gridRef = useRef(null);
@@ -229,6 +234,7 @@ function Map () {
               handleControlBorderWidth={handleControlBorderWidth}
               handleControlBorderColor={handleControlBorderColor}
               handleControlFillColor={handleControlFillColor}
+              handleControlExit={handleControlExit}
             />
             <MapGrid
               mapData={mapData}
