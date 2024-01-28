@@ -198,7 +198,7 @@ function Map () {
   };
 
   return (
-    <div className="map">
+    <Fragment>
       { result ?
         <Fragment>
           <Navbar>
@@ -231,7 +231,7 @@ function Map () {
         :
         <h3>Loading...</h3>
       }
-    </div>
+    </Fragment>
   );
 }
 
