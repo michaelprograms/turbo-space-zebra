@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 import { MapGridRoomWrapper, RoomCircle } from './style.js';
 
 function MapGridRoom (props) {
@@ -16,31 +14,61 @@ function MapGridRoom (props) {
       $borderRadius={room.borderRadius}
       $borderWidth={room.borderWidth}
     >
+      { room?.northwestEnabled ?
+        <div className="line-northwest-wrapper">
+          <div className="line line-northwest"></div>
+        </div>
+        :
+        null
+      }
+      { room?.northeastEnabled ?
+        <div className="line-northeast-wrapper">
+          <div className="line line-northeast"></div>
+        </div>
+        :
+        null
+      }
+      { room?.southwestEnabled ?
+        <div className="line-southwest-wrapper">
+          <div className="line line-southwest"></div>
+        </div>
+        :
+        null
+      }
+      { room?.southeastEnabled ?
+        <div className="line-southeast-wrapper">
+          <div className="line line-southeast"></div>
+        </div>
+        :
+        null
+      }
+      { room?.northEnabled ?
+        <div className="line line-north"></div>
+        :
+        null
+      }
+      { room?.southEnabled ?
+        <div className="line line-south"></div>
+        :
+        null
+      }
+      { room?.westEnabled ?
+        <div className="line line-west"></div>
+        :
+        null
+      }
+      { room?.eastEnabled ?
+        <div className="line line-east"></div>
+        :
+        null
+      }
       { room?.enabled ?
-        <Fragment>
-          <div className="line-northwest-wrapper">
-            <div className="line line-northwest"></div>
-          </div>
-          <div className="line-northeast-wrapper">
-            <div className="line line-northeast"></div>
-          </div>
-          <div className="line-southwest-wrapper">
-            <div className="line line-southwest"></div>
-          </div>
-          <div className="line-southeast-wrapper">
-            <div className="line line-southeast"></div>
-          </div>
-          <div className="line line-north"></div>
-          <div className="line line-south"></div>
-          <div className="line line-west"></div>
-          <div className="line line-east"></div>
-          <RoomCircle
-            $fillColor={room.fillColor}
-            $borderColor={room.borderColor}
-            $borderRadius={room.borderRadius}
-            $borderWidth={room.borderWidth}
-          />
-        </Fragment>
+        <RoomCircle
+          $fillColor={room.fillColor}
+          $borderColor={room.borderColor}
+          $borderRadius={room.borderRadius}
+          $borderWidth={room.borderWidth}
+        />
         :
         null
       }
