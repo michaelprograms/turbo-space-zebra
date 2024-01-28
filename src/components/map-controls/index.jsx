@@ -22,7 +22,6 @@ function MapControls (props) {
   const [ borderColor, setBorderColor ] = useState('#666666');
   const [ fillColor, setFillColor ] = useState('#999999');
 
-
   useEffect(() => {
     const room = mapData?.[focusX]?.[focusY] || {};
     setEnabled(room.enabled !== undefined ? room.enabled : false);

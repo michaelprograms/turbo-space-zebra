@@ -68,7 +68,7 @@ function Map () {
         mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Enabled'] = false;
       }
       if (mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Width'] === undefined) {
-        mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Width'] = '#999999';
+        mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Width'] = '4px';
       }
       if (mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Color'] === undefined) {
         mapCopy[mapFocusX][mapFocusY][dirs[i] + 'Color'] = '#666666';
