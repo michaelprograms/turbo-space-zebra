@@ -16,17 +16,15 @@ function MapControls (props) {
     handleControlFillColor,
   } = { ...props };
 
-  const [ roomData, setRoomData ] = useState({ });
   const [ enabled, setEnabled ] = useState(false);
   const [ borderRadius, setBorderRadius ] = useState(0);
   const [ borderWidth, setBorderWidth ] = useState(2);
   const [ borderColor, setBorderColor ] = useState('#666666');
   const [ fillColor, setFillColor ] = useState('#999999');
 
+
   useEffect(() => {
     const room = mapData?.[focusX]?.[focusY] || {};
-
-    setRoomData(room);
     setEnabled(room.enabled !== undefined ? room.enabled : false);
     setBorderRadius(room.borderRadius !== undefined ? room.borderRadius : 50);
     setBorderWidth(room.borderWidth !== undefined ? room.borderWidth : 2);
