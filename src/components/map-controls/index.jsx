@@ -92,6 +92,7 @@ function MapControls (props) {
               labelStepSize={1}
               onChange={handleControlBorderWidth}
               value={borderWidth}
+              disabled={!enabled}
             />
           </MapControlLabel>
           <MapControlLabel>
@@ -103,6 +104,7 @@ function MapControls (props) {
               labelStepSize={10}
               onChange={handleControlBorderRadius}
               value={borderRadius}
+              disabled={!enabled}
             />
           </MapControlLabel>
           <MapControlLabel>
@@ -113,6 +115,7 @@ function MapControls (props) {
               <Button
                 text={borderColor}
                 fill={true}
+                disabled={!enabled}
               />
             </Popover>
           </MapControlLabel>
@@ -124,6 +127,7 @@ function MapControls (props) {
               <Button
                 text={fillColor}
                 fill={true}
+                disabled={!enabled}
               />
             </Popover>
           </MapControlLabel>
