@@ -159,27 +159,12 @@ function Map () {
     const mapCopy = enableRoom(mapFocusX, mapFocusY, event.target.checked);
     setMapData(mapCopy);
   };
-  const handleControlBorderRadius = async (event) => {
+  const handleControlRoomValue = async (key, value) => {
     const mapCopy = [ ...mapData ];
-    mapCopy[mapFocusX][mapFocusY].borderRadius = event;
+    mapCopy[mapFocusX][mapFocusY][key] = value;
     setMapData(mapCopy);
   };
-  const handleControlBorderWidth = async (event) => {
-    const mapCopy = [ ...mapData ];
-    mapCopy[mapFocusX][mapFocusY].borderWidth = event;
-    setMapData(mapCopy);
-  };
-  const handleControlBorderColor = async (event) => {
-    const mapCopy = [ ...mapData ];
-    mapCopy[mapFocusX][mapFocusY].borderColor = event.hex;
-    setMapData(mapCopy);
-  };
-  const handleControlFillColor = async (event) => {
-    const mapCopy = [ ...mapData ];
-    mapCopy[mapFocusX][mapFocusY].fillColor = event.hex;
-    setMapData(mapCopy);
-  };
-  const handleControlExit = async (event, dir) => {
+  const handleControlExitToggle = async (dir) => {
     const mapCopy = [ ...mapData ];
     mapCopy[mapFocusX][mapFocusY][dir+'Enabled'] = !mapCopy[mapFocusX][mapFocusY][dir+'Enabled'];
     setMapData(mapCopy);
@@ -230,11 +215,8 @@ function Map () {
               focusX={mapFocusX}
               focusY={mapFocusY}
               handleControlEnable={handleControlEnable}
-              handleControlBorderRadius={handleControlBorderRadius}
-              handleControlBorderWidth={handleControlBorderWidth}
-              handleControlBorderColor={handleControlBorderColor}
-              handleControlFillColor={handleControlFillColor}
-              handleControlExit={handleControlExit}
+              handleControlRoomValue={handleControlRoomValue}
+              handleControlExitToggle={handleControlExitToggle}
             />
             <MapGrid
               mapData={mapData}

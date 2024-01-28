@@ -10,11 +10,8 @@ function MapControls (props) {
     focusX = 0,
     focusY = 0,
     handleControlEnable,
-    handleControlBorderRadius,
-    handleControlBorderWidth,
-    handleControlBorderColor,
-    handleControlFillColor,
-    handleControlExit,
+    handleControlRoomValue,
+    handleControlExitToggle,
   } = { ...props };
 
   const [ enabled, setEnabled ] = useState(false);
@@ -57,7 +54,7 @@ function MapControls (props) {
       <Popover>
         <ChromePicker
           color={borderColor}
-          onChange={e => handleControlBorderColor(e)}
+          onChange={e => handleControlRoomValue('borderColor', e.hex)}
         />
       </Popover>
     );
@@ -67,7 +64,7 @@ function MapControls (props) {
       <Popover>
         <ChromePicker
           color={fillColor}
-          onChange={e => handleControlFillColor(e)}
+          onChange={e => handleControlRoomValue('fillColor', e.hex)}
         />
       </Popover>
     );
@@ -90,38 +87,38 @@ function MapControls (props) {
           <MapButtonGroupExits>
             <Button
               intent={exitNorthwest ? 'primary' : null} icon='arrow-top-left'
-              onClick={e => handleControlExit(e, 'northwest')}
+              onClick={e => handleControlExitToggle('northwest')}
             />
             <Button
               intent={exitNorth ? 'primary' : null} icon='arrow-up'
-              onClick={e => handleControlExit(e, 'north')}
+              onClick={e => handleControlExitToggle('north')}
             />
             <Button
               intent={exitNortheast ? 'primary' : null} icon='arrow-top-right'
-              onClick={e => handleControlExit(e, 'northeast')}
+              onClick={e => handleControlExitToggle('northeast')}
             />
             <Button
               intent={exitWest ? 'primary' : null} icon='arrow-left'
-              onClick={e => handleControlExit(e, 'west')}
+              onClick={e => handleControlExitToggle('west')}
             />
             <Button
               disabled={true}
             />
             <Button
               intent={exitEast ? 'primary' : null} icon='arrow-right'
-              onClick={e => handleControlExit(e, 'east')}
+              onClick={e => handleControlExitToggle('east')}
             />
             <Button
               intent={exitSouthwest ? 'primary' : null} icon='arrow-bottom-left'
-              onClick={e => handleControlExit(e, 'southwest')}
+              onClick={e => handleControlExitToggle('southwest')}
             />
             <Button
               intent={exitSouth ? 'primary' : null} icon='arrow-down'
-              onClick={e => handleControlExit(e, 'south')}
+              onClick={e => handleControlExitToggle('south')}
             />
             <Button
               intent={exitSoutheast ? 'primary' : null} icon='arrow-bottom-right'
-              onClick={e => handleControlExit(e, 'southeast')}
+              onClick={e => handleControlExitToggle('southeast')}
             />
           </MapButtonGroupExits>
         </FormGroup>
@@ -135,7 +132,7 @@ function MapControls (props) {
               max={10}
               stepSize={1}
               labelStepSize={1}
-              onChange={handleControlBorderWidth}
+              onChange={e => handleControlRoomValue('borderWidth', e)}
               value={borderWidth}
               disabled={!enabled}
             />
@@ -147,7 +144,7 @@ function MapControls (props) {
               max={50}
               stepSize={1}
               labelStepSize={10}
-              onChange={handleControlBorderRadius}
+              onChange={e => handleControlRoomValue('borderRadius', e)}
               value={borderRadius}
               disabled={!enabled}
             />
