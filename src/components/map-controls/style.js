@@ -3,7 +3,7 @@ import { ButtonGroup, Label, Slider, Switch } from '@blueprintjs/core';
 
 export const MapControlWrapper = styled.div`
   width: 250px;
-  padding: 20px;
+  min-width: 250px;
 `;
 
 export const MapControlLabel = styled(Label)`
