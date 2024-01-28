@@ -35,10 +35,8 @@ function Map () {
     }
   }, [ data ]);
 
-  const enableRoom = (x, y, value) => {
-    const mapCopy = [ ...mapData ];
-
-    mapCopy[mapFocusX][mapFocusY].enabled = value !== undefined ? value : !mapCopy[mapFocusX][mapFocusY].enabled;
+  const enableRoom = (mapCopy) => {
+    mapCopy[mapFocusX][mapFocusY].enabled = !mapCopy[mapFocusX][mapFocusY].enabled;
 
     if (mapCopy[mapFocusX][mapFocusY].borderRadius === undefined) {
       mapCopy[mapFocusX][mapFocusY].borderRadius = 50;
@@ -125,7 +123,7 @@ function Map () {
           break;
         case ' ':
           event.preventDefault();
-          const mapCopy = enableRoom(mapFocusX, mapFocusY);
+          const mapCopy = enableRoom([ ...mapData ]);
           setMapData(mapCopy);
           break;
         default:
@@ -154,19 +152,20 @@ function Map () {
   };
 
   // map controls
-  const handleControlEnable = async (event) => {
-    event.stopPropagation();
-    const mapCopy = enableRoom(mapFocusX, mapFocusY, event.target.checked);
-    setMapData(mapCopy);
-  };
   const handleControlRoomValue = async (key, value) => {
     const mapCopy = [ ...mapData ];
     mapCopy[mapFocusX][mapFocusY][key] = value;
     setMapData(mapCopy);
   };
-  const handleControlExitToggle = async (dir) => {
-    const mapCopy = [ ...mapData ];
-    mapCopy[mapFocusX][mapFocusY][dir+'Enabled'] = !mapCopy[mapFocusX][mapFocusY][dir+'Enabled'];
+  const handleControlRoomToggle = async (key) => {
+    let mapCopy = [ ...mapData ];
+
+    if (key === 'enabled') {
+      mapCopy = enableRoom([ ...mapCopy ]);
+    } else {
+      mapCopy[mapFocusX][mapFocusY][key] = !mapCopy[mapFocusX][mapFocusY][key];
+    }
+
     setMapData(mapCopy);
   };
 
@@ -214,9 +213,8 @@ function Map () {
               mapData={mapData}
               focusX={mapFocusX}
               focusY={mapFocusY}
-              handleControlEnable={handleControlEnable}
               handleControlRoomValue={handleControlRoomValue}
-              handleControlExitToggle={handleControlExitToggle}
+              handleControlRoomToggle={handleControlRoomToggle}
             />
             <MapGrid
               mapData={mapData}

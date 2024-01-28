@@ -2,16 +2,22 @@ import { useEffect, useState } from 'react';
 import { Button, FormGroup, Popover, Section } from '@blueprintjs/core';
 import { ChromePicker } from 'react-color';
 
-import { MapControlWrapper, MapControlLabel, MapControlSlider, MapControlSwitch, MapButtonGroupExits } from './style.js';
+import {
+  MapControlWrapper,
+  MapControlLabel,
+  MapControlSlider,
+  MapButtonGroupExits,
+  MapControlButtonExit,
+  MapRoomCircle
+} from './style.js';
 
 function MapControls (props) {
   const {
     mapData = [],
     focusX = 0,
     focusY = 0,
-    handleControlEnable,
     handleControlRoomValue,
-    handleControlExitToggle,
+    handleControlRoomToggle,
   } = { ...props };
 
   const [ enabled, setEnabled ] = useState(false);
@@ -28,8 +34,9 @@ function MapControls (props) {
   const [ exitWest, setExitWest ] = useState(false);
   const [ exitNorthwest, setExitNorthwest ] = useState(false);
 
+  let room = mapData?.[focusX]?.[focusY] || {};
   useEffect(() => {
-    const room = mapData?.[focusX]?.[focusY] || {};
+    room = mapData?.[focusX]?.[focusY] || {};
 
     setEnabled(room.enabled !== undefined ? room.enabled : false);
     setExitNorth(room.northEnabled !== undefined ? room.northEnabled : false);
@@ -73,55 +80,52 @@ function MapControls (props) {
   return (
     <MapControlWrapper>
       <Section>
-        <FormGroup
-          label='Room'
-        >
-          <MapControlSwitch
-            alignIndicator='right'
-            labelElement='Enable'
-            innerLabelChecked='on' innerLabel='off'
-            checked={enabled}
-            onChange={handleControlEnable}
+        <MapControlLabel>Room and Links</MapControlLabel>
+        <MapButtonGroupExits>
+          <MapControlButtonExit
+            intent={exitNorthwest ? 'primary' : null} icon='arrow-top-left'
+            onClick={e => handleControlRoomToggle('northwestEnabled')}
           />
-          <MapControlLabel>Links</MapControlLabel>
-          <MapButtonGroupExits>
-            <Button
-              intent={exitNorthwest ? 'primary' : null} icon='arrow-top-left'
-              onClick={e => handleControlExitToggle('northwest')}
+          <MapControlButtonExit
+            intent={exitNorth ? 'primary' : null} icon='arrow-up'
+            onClick={e => handleControlRoomToggle('northEnabled')}
+          />
+          <MapControlButtonExit
+            intent={exitNortheast ? 'primary' : null} icon='arrow-top-right'
+            onClick={e => handleControlRoomToggle('northeastEnabled')}
+          />
+          <MapControlButtonExit
+            intent={exitWest ? 'primary' : null} icon='arrow-left'
+            onClick={e => handleControlRoomToggle('westEnabled')}
+          />
+          <MapControlButtonExit
+            intent={room?.enabled ? 'primary' : null}
+            onClick={e => handleControlRoomToggle('enabled')}
+          >
+            <MapRoomCircle
+              $fillColor={room?.fillColor}
+              $borderColor={room?.borderColor}
+              $borderRadius={room?.borderRadius}
+              $borderWidth={room?.borderWidth}
             />
-            <Button
-              intent={exitNorth ? 'primary' : null} icon='arrow-up'
-              onClick={e => handleControlExitToggle('north')}
-            />
-            <Button
-              intent={exitNortheast ? 'primary' : null} icon='arrow-top-right'
-              onClick={e => handleControlExitToggle('northeast')}
-            />
-            <Button
-              intent={exitWest ? 'primary' : null} icon='arrow-left'
-              onClick={e => handleControlExitToggle('west')}
-            />
-            <Button
-              disabled={true}
-            />
-            <Button
-              intent={exitEast ? 'primary' : null} icon='arrow-right'
-              onClick={e => handleControlExitToggle('east')}
-            />
-            <Button
-              intent={exitSouthwest ? 'primary' : null} icon='arrow-bottom-left'
-              onClick={e => handleControlExitToggle('southwest')}
-            />
-            <Button
-              intent={exitSouth ? 'primary' : null} icon='arrow-down'
-              onClick={e => handleControlExitToggle('south')}
-            />
-            <Button
-              intent={exitSoutheast ? 'primary' : null} icon='arrow-bottom-right'
-              onClick={e => handleControlExitToggle('southeast')}
-            />
-          </MapButtonGroupExits>
-        </FormGroup>
+          </MapControlButtonExit>
+          <MapControlButtonExit
+            intent={exitEast ? 'primary' : null} icon='arrow-right'
+            onClick={e => handleControlRoomToggle('eastEnabled')}
+          />
+          <MapControlButtonExit
+            intent={exitSouthwest ? 'primary' : null} icon='arrow-bottom-left'
+            onClick={e => handleControlRoomToggle('southwestEnabled')}
+          />
+          <MapControlButtonExit
+            intent={exitSouth ? 'primary' : null} icon='arrow-down'
+            onClick={e => handleControlRoomToggle('southEnabled')}
+          />
+          <MapControlButtonExit
+            intent={exitSoutheast ? 'primary' : null} icon='arrow-bottom-right'
+            onClick={e => handleControlRoomToggle('southeastEnabled')}
+          />
+        </MapButtonGroupExits>
       </Section>
       <Section>
         <FormGroup>
