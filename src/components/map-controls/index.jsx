@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, Section } from '@blueprintjs/core';
+import { Button, FormGroup, Popover, Section } from '@blueprintjs/core';
+import { ChromePicker } from 'react-color';
 
 import { MapControlWrapper, MapControlLabel, MapControlSlider, MapControlSwitch, MapButtonGroupExits } from './style.js';
 
@@ -11,14 +12,16 @@ function MapControls (props) {
     handleControlEnable,
     handleControlBorderRadius,
     handleControlBorderWidth,
+    handleControlBorderColor,
+    handleControlFillColor,
   } = { ...props };
 
   const [ roomData, setRoomData ] = useState({ });
   const [ enabled, setEnabled ] = useState(false);
   const [ borderRadius, setBorderRadius ] = useState(0);
   const [ borderWidth, setBorderWidth ] = useState(2);
-  // @TODO borderColor control
-  // const [ borderColor, setBorderColor ] = useState('#999');
+  const [ borderColor, setBorderColor ] = useState('#666666');
+  const [ fillColor, setFillColor ] = useState('#999999');
 
   useEffect(() => {
     const room = mapData?.[focusX]?.[focusY] || {};
@@ -27,45 +30,47 @@ function MapControls (props) {
     setEnabled(room.enabled !== undefined ? room.enabled : false);
     setBorderRadius(room.borderRadius !== undefined ? room.borderRadius : 50);
     setBorderWidth(room.borderWidth !== undefined ? room.borderWidth : 2);
+    setBorderColor(room.borderColor !== undefined ? room.borderColor : '#666666');
+    setFillColor(room.fillColor !== undefined ? room.fillColor : '#999999');
 
     console.log('Room focused', room);
   }, [ focusX, focusY, mapData ]);
 
+  const borderColorPopover = () => {
+    return (
+      <Popover>
+        <ChromePicker
+          color={borderColor}
+          onChange={e => handleControlBorderColor(e)}
+        />
+      </Popover>
+    );
+  };
+  const fillColorPopover = () => {
+    return (
+      <Popover>
+        <ChromePicker
+          color={fillColor}
+          onChange={e => handleControlFillColor(e)}
+        />
+      </Popover>
+    );
+  };
+
   return (
     <MapControlWrapper>
       <Section>
-        <MapControlSwitch
-          alignIndicator='right'
-          labelElement='Enable Room'
-          innerLabelChecked='on' innerLabel='off'
-          checked={enabled}
-          onChange={handleControlEnable}
-        />
-        <MapControlLabel>
-          Border Width
-          <MapControlSlider
-            min={1}
-            max={10}
-            stepSize={1}
-            labelStepSize={1}
-            onChange={handleControlBorderWidth}
-            value={borderWidth}
+        <FormGroup
+          label='Room'
+        >
+          <MapControlSwitch
+            alignIndicator='right'
+            labelElement='Enable'
+            innerLabelChecked='on' innerLabel='off'
+            checked={enabled}
+            onChange={handleControlEnable}
           />
-        </MapControlLabel>
-        <MapControlLabel>
-          Border Radius
-          <MapControlSlider
-            min={0}
-            max={50}
-            stepSize={1}
-            labelStepSize={10}
-            onChange={handleControlBorderRadius}
-            value={borderRadius}
-          />
-        </MapControlLabel>
-      </Section>
-      <Section>
-        <MapControlLabel>Links</MapControlLabel>
+          <MapControlLabel>Links</MapControlLabel>
           <MapButtonGroupExits>
             <Button icon='arrow-top-left' />
             <Button icon='arrow-up' />
@@ -77,6 +82,55 @@ function MapControls (props) {
             <Button icon='arrow-down' />
             <Button icon='arrow-bottom-right' />
           </MapButtonGroupExits>
+        </FormGroup>
+      </Section>
+      <Section>
+        <FormGroup>
+          <MapControlLabel>
+            Border Width
+            <MapControlSlider
+              min={1}
+              max={10}
+              stepSize={1}
+              labelStepSize={1}
+              onChange={handleControlBorderWidth}
+              value={borderWidth}
+            />
+          </MapControlLabel>
+          <MapControlLabel>
+            Border Radius
+            <MapControlSlider
+              min={0}
+              max={50}
+              stepSize={1}
+              labelStepSize={10}
+              onChange={handleControlBorderRadius}
+              value={borderRadius}
+            />
+          </MapControlLabel>
+          <MapControlLabel>
+            Border Color
+            <Popover
+              content={borderColorPopover()}
+            >
+              <Button
+                text={borderColor}
+                fill={true}
+              />
+            </Popover>
+          </MapControlLabel>
+          <MapControlLabel>
+            Fill Color
+            <Popover
+              content={fillColorPopover()}
+            >
+              <Button
+                text={fillColor}
+                fill={true}
+              />
+            </Popover>
+          </MapControlLabel>
+        </FormGroup>
       </Section>
     </MapControlWrapper>
   );
