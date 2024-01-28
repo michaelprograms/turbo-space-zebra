@@ -104,7 +104,7 @@ export const MapGridRoomWrapper = styled.div`
   }
 `;
 
-export const RoomCircle = styled.div`
+export const RoomSymbol = styled.div`
   width: 19px;
   height: 19px;
   box-sizing: border-box;

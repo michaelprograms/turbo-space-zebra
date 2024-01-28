@@ -1,14 +1,14 @@
-import { MapGridRoomWrapper, RoomCircle } from './style.js';
+import { MapGridRoomWrapper, RoomSymbol } from './style.js';
 
 function MapGridRoom (props) {
   const { room } = { ...props };
 
   return (
     <MapGridRoomWrapper
-      $enabled={room.enabled}
-      $borderColor={room.borderColor}
-      $borderRadius={room.borderRadius}
-      $borderWidth={room.borderWidth}
+      $enabled={room?.enabled}
+      $borderColor={room?.borderColor}
+      $borderRadius={room?.borderRadius}
+      $borderWidth={room?.borderWidth}
     >
       { room?.northwestEnabled ?
         <div className="line-northwest-wrapper">
@@ -59,7 +59,7 @@ function MapGridRoom (props) {
         null
       }
       { room?.enabled ?
-        <RoomCircle
+        <RoomSymbol
           $fillColor={room.fillColor}
           $borderColor={room.borderColor}
           $borderRadius={room.borderRadius}
