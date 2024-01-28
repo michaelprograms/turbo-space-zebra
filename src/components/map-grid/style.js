@@ -20,7 +20,6 @@ export const MapGridRow = styled.div`
 export const MapGridCell = styled.div`
   width: 35px;
   height: 35px;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;

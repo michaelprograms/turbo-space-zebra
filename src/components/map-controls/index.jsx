@@ -156,6 +156,7 @@ function MapControls (props) {
             Border Color
             <Popover
               content={borderColorPopover()}
+              placement='top'
             >
               <Button
                 text={borderColor}
@@ -168,6 +169,7 @@ function MapControls (props) {
             Fill Color
             <Popover
               content={fillColorPopover()}
+              placement='top'
             >
               <Button
                 text={fillColor}

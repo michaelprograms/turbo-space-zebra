@@ -12,89 +12,91 @@ export const MapGridRoomWrapper = styled.div`
   .line-northwest-wrapper {
     width: 50%;
     height: 50%;
-    overflow: hidden;
     position: absolute;
+
+    .line-northwest {
+      width: 27px;
+      height: 3px;
+      top: -2px;
+      left: 0;
+      transform-origin: top left;
+      transform: rotate(45deg);
+    }
   }
   .line-northeast-wrapper {
     width: 50%;
     height: 50%;
-    overflow: hidden;
     position: absolute;
     right: 0;
+
+    .line-northeast {
+      width: 27px;
+      height: 3px;
+      top: -2px;
+      right: 0;
+      transform-origin: top right;
+      transform: rotate(-45deg);
+    }
   }
   .line-southwest-wrapper {
     width: 50%;
     height: 50%;
-    overflow: hidden;
     position: absolute;
     bottom: 0px;
+
+    .line-southwest {
+      width: 27px;
+      height: 3px;
+      bottom: -2px;
+      left: 0;
+      transform-origin: bottom left;
+      transform: rotate(-45deg);
+    }
   }
   .line-southeast-wrapper {
     width: 50%;
     height: 50%;
-    overflow: hidden;
     position: absolute;
     right: 0;
     bottom: 0px;
-  }
-  .line-northwest {
-    width: 142%;
-    height: 4px;
-    top: -3px;
-    transform-origin: top left;
-    transform: rotate(45deg);
-  }
-  .line-northeast {
-    width: 142%;
-    height: 4px;
-    top: -3px;
-    right: 0;
-    transform-origin: top right;
-    transform: rotate(-45deg);
-  }
-  .line-southwest {
-    width: 142%;
-    height: 4px;
-    bottom: -3px;
-    transform-origin: bottom left;
-    transform: rotate(-45deg);
-  }
-  .line-southeast {
-    width: 142%;
-    height: 4px;
-    bottom: -3px;
-    right: 0;
-    transform-origin: bottom right;
-    transform: rotate(45deg);
+
+    .line-southeast {
+      width: 27px;
+      height: 3px;
+      bottom: -2px;
+      right: 0;
+      transform-origin: bottom right;
+      transform: rotate(45deg);
+    }
   }
 
   .line-north {
-    width: 4px;
-    height: 50%;
-    top: 0;
+    width: 3px;
+    height: 18px;
+    top: 0px;
     left: 50%;
     transform-origin: top;
     transform: translateX(-50%);
   }
   .line-south {
-    width: 4px;
-    height: 50%;
+    width: 3px;
+    height: 18px;
     bottom: 0;
     left: 50%;
     transform-origin: bottom;
     transform: translateX(-50%);
   }
   .line-west {
-    width: 50%;
-    height: 4px;
+    width: 18px;
+    height: 3px;
     top: 50%;
     left: 0;
     transform-origin: left;
     transform: translateY(-50%);
   }
   .line-east {
-    width: 50%;
-    height: 4px;
+    width: 18px;
+    height: 3px;
     top: 50%;
     right: 0;
     transform-origin: right;

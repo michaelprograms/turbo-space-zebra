@@ -3,10 +3,6 @@ import { MapGridRoomWrapper, RoomCircle } from './style.js';
 function MapGridRoom (props) {
   const { room } = { ...props };
 
-  if (Object.keys(room).length) {
-    console.log('MapGridRoom', room);
-  }
-
   return (
     <MapGridRoomWrapper
       $enabled={room.enabled}
