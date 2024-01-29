@@ -8,10 +8,10 @@ import './App.css';
 function App () {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/maps" element={<Home />} />
-      <Route path="/map/:id" element={<Map />} />
-    </Routes>      
+      <Route path="/turbo-space-zebra/" element={<Home />} />
+      <Route path="/turbo-space-zebra/maps" element={<Home />} />
+      <Route path="/turbo-space-zebra/map/:id" element={<Map />} />
+    </Routes>
   );
 }
 

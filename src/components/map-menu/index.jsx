@@ -42,7 +42,7 @@ function PageMenu () {
       </MapMenuButtons>
       <MapMenuCardList>
         {mapsData?.map((map) => (
-          <Link to={"/map/"+map.id} key={map.id}>
+          <Link to={"/turbo-space-zebra/map/"+map.id} key={map.id}>
             <Card interactive={true} >
               <span>{map.name}, {map.width}x{map.height}</span>
             </Card>
