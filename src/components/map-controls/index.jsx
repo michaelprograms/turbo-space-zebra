@@ -8,7 +8,7 @@ import {
   MapControlSlider,
   MapButtonGroupExits,
   MapControlButtonExit,
-  MapRoomCircle
+  MapRoomSymbol
 } from './style.js';
 
 function MapControls (props) {
@@ -102,7 +102,7 @@ function MapControls (props) {
             intent={room?.enabled ? 'primary' : null}
             onClick={e => handleControlRoomToggle('enabled')}
           >
-            <MapRoomCircle
+            <MapRoomSymbol
               $fillColor={room?.fillColor}
               $borderColor={room?.borderColor}
               $borderRadius={room?.borderRadius}

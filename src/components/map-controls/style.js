@@ -28,14 +28,14 @@ export const MapControlButtonExit = styled(Button)`
   height: 35px;
 `;
 
-export const MapRoomCircle = styled.div`
+export const MapRoomSymbol = styled.div`
   width: 19px;
   height: 19px;
   box-sizing: border-box;
 
   border-style: solid;
-  background-color: ${props => props.$fillColor !== undefined ? props.$fillColor : '' };
+  background-color: ${props => props.$fillColor !== undefined ? props.$fillColor : '#999999' };
   border-radius: ${props => props.$borderRadius !== undefined ? props.$borderRadius + '%' : '50%'};
   border-width: ${props => props.$borderWidth !== undefined ? props.$borderWidth + 'px' : '2px'};
-  border-color: ${props => props.$borderColor !== undefined ? props.$borderColor : 'transparent'};
+  border-color: ${props => props.$borderColor !== undefined ? props.$borderColor : '#666666'};
 `;
