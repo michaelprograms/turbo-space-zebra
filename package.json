@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@blueprintjs/core": "^5.9.1",
-    "@testing-library/jest-dom": "^6.4.0",
+    "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.4.3",
     "dexie": "^3.2.4",
